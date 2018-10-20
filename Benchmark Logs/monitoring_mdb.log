@@ -1,0 +1,581 @@
+/* During Data Load time */
+[mariadb-user@ip-172-31-21-62 ~]$ mcsadmin getModuleCpu pm1
+getmodulecpu   Fri Oct 12 09:36:52 2018
+
+Module 'pm1' CPU Usage % = 0
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getActiveSQLStatements
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getactivesqlstatements   Fri Oct 12 09:35:05 2018
+
+Get List of Active SQL Statements
+=================================
+
+No Active SQL Statements at this time
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getStorageStatus
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getstoragestatus   Fri Oct 12 09:35:39 2018
+System External DBRoot Storage Statuses
+
+Component     Status                       Last Status Change
+------------  --------------------------   ------------------------
+DBRoot #1     ACTIVE                       Fri Oct 12 09:03:54 2018
+DBRoot #2     ACTIVE                       Fri Oct 12 09:04:04 2018
+DBRoot #3     ACTIVE                       Fri Oct 12 09:04:09 2018
+DBRoot #4     ACTIVE                       Fri Oct 12 09:04:14 2018
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemCpu
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemcpu   Fri Oct 12 09:35:52 2018
+
+System CPU Usage per Module
+
+
+Module 'um1' CPU Usage % = 0
+
+Module 'pm1' CPU Usage % = 0
+
+Module 'pm2' CPU Usage % = 0
+
+Module 'pm3' CPU Usage % = 0
+
+Module 'pm4' CPU Usage % = 0
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemCpuUsers
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemcpuusers   Fri Oct 12 09:36:28 2018
+
+System Process Top CPU Users per Module
+
+Module 'um1' Top CPU Users
+
+Process             CPU Usage %
+-----------------   -----------
+cpimport                 37
+
+Module 'pm1' Top CPU Users
+
+Process             CPU Usage %
+-----------------   -----------
+cpimport.+               43
+top                      6
+WriteEngi+               6
+
+Module 'pm2' Top CPU Users
+
+Process             CPU Usage %
+-----------------   -----------
+cpimport.+               62
+WriteEngi+               6
+
+Module 'pm3' Top CPU Users
+
+Process             CPU Usage %
+-----------------   -----------
+cpimport.+               62
+
+Module 'pm4' Top CPU Users
+
+Process             CPU Usage %
+-----------------   -----------
+cpimport.+               50
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemMemory
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemmemory   Fri Oct 12 09:39:12 2018
+
+System Memory Usage per Module (in K bytes)
+
+Module  Mem Total  Mem Used  Cache    Mem Usage %  Swap Total  Swap Used  Swap Usage %
+------  ---------  --------  -------  -----------  ----------  ---------  ------------
+um1     503413436  3654312   62117516     0        2097148     0               0
+pm1     503413436  3870360   7711132      0        2097148     0               0
+pm2     503413436  3943068   9075016      0        2097148     0               0
+pm3     503413436  3910984   8593620      0        2097148     0               0
+pm4     503413436  3877552   8597992      0        2097148     0               0
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemMemoryUsers
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemmemoryusers   Fri Oct 12 09:39:19 2018
+
+System Process Top Memory Users per Module
+
+Module 'um1' Top Memory Users (in bytes)
+
+Process             Memory Used  Memory Usage %
+-----------------   -----------  --------------
+mysqld              17768              1
+cpimport            3446               1
+DDLProc             2144               1
+workernode          1952               1
+DMLProc             1901               1
+
+Module 'pm1' Top Memory Users (in bytes)
+
+Process             Memory Used  Memory Usage %
+-----------------   -----------  --------------
+cpimport.bin        28203              1
+PrimProc            15814              1
+WriteEngineServ     3884               1
+controllernode      2095               1
+workernode          1955               1
+
+Module 'pm2' Top Memory Users (in bytes)
+
+Process             Memory Used  Memory Usage %
+-----------------   -----------  --------------
+cpimport.bin        30986              1
+PrimProc            14860              1
+workernode          1952               1
+python              1922               1
+WriteEngineServ     1794               1
+
+Module 'pm3' Top Memory Users (in bytes)
+
+Process             Memory Used  Memory Usage %
+-----------------   -----------  --------------
+cpimport.bin        27368              1
+PrimProc            14761              1
+workernode          1951               1
+ProcMon             1726               1
+python              1720               1
+
+Module 'pm4' Top Memory Users (in bytes)
+
+Process             Memory Used  Memory Usage %
+-----------------   -----------  --------------
+cpimport.bin        27854              1
+PrimProc            13978              1
+workernode          1952               1
+WriteEngineServ     1791               1
+ProcMon             1740               1
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemResourceUsage
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemresourceusage   Fri Oct 12 09:39:39 2018
+
+System Resource Usage per Module
+
+
+Module 'um1' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3673072k used, 68490716k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: cpimport 25%, top 6%
+Top Memory Process Users: mysqld 1%, cpimport 1%, DDLProc 1%, workernode 1%, DMLProc 1%
+Disk Usage: / 7%
+
+
+Module 'pm1' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3887472k used, 8343148k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: cpimport.+ 87%, top 6%, WriteEngi+ 6%
+Top Memory Process Users: cpimport.bin 1%, PrimProc 1%, WriteEngineServ 1%, controllernode 1%, workernode 1%
+
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data1 2%
+
+
+Module 'pm2' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3974068k used, 9751780k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: cpimport.+ 62%
+Top Memory Process Users: cpimport.bin 1%, PrimProc 1%, WriteEngineServ 1%, workernode 1%, python 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data2 2%
+
+
+Module 'pm3' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3936744k used, 9539748k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: cpimport.+ 20%, WriteEngi+ 6%
+Top Memory Process Users: cpimport.bin 1%, PrimProc 1%, workernode 1%, WriteEngineServ 1%, ProcMon 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data3 2%
+
+
+Module 'pm4' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3910540k used, 9561604k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: cpimport.+ 68%, WriteEngi+ 12%, top 6%
+Top Memory Process Users: cpimport.bin 1%, PrimProc 1%, WriteEngineServ 1%, workernode 1%, ProcMon 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data4 2%
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemNetworkConfig
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemnetworkconfig   Fri Oct 12 09:40:45 2018
+
+System Network Configuration
+
+Module Name    Module Description            NIC ID    Host Name               IP Address
+-----------    -------------------------     ------    -------------------     ---------------
+um1            User Module #1                   1      i-0792a26cb0d3fd297     172.31.26.232
+pm1            Performance Module #1            1      i-05eaf06a841317af5     172.31.21.62
+pm2            Performance Module #2            1      i-02b64acbfc667408b     172.31.24.16
+pm3            Performance Module #3            1      i-01dfb9ad14aa743c2     172.31.31.174
+pm4            Performance Module #4            1      i-095f0de09f7f4e6d7     172.31.20.51
+
+Amazon Instance Configuration
+
+PMInstanceType = r4.16xlarge
+UMInstanceType = r4.16xlarge
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSystemDisk
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemdisk   Fri Oct 12 09:41:30 2018
+
+System Disk Usage per Module
+
+Module 'um1' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6851188          7
+
+Module 'pm1' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6857492          7
+.../mariadb/columnstore/data1  412849328     5710912          2
+
+Module 'pm2' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6850964          7
+.../mariadb/columnstore/data2  412849328     5619256          2
+
+Module 'pm3' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6850996          7
+.../mariadb/columnstore/data3  412849328     5136716          2
+
+Module 'pm4' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6851660          7
+.../mariadb/columnstore/data4  412849328     5140692          2
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getSoftwareInfo
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsoftwareinfo   Fri Oct 12 09:42:14 2018
+
+SoftwareVersion = 1.1.6
+SoftwareRelease = 1
+
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getProcessStatus
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getprocessstatus   Fri Oct 12 09:42:24 2018
+
+MariaDB ColumnStore Process statuses
+
+Process             Module    Status            Last Status Change        Process ID
+------------------  ------    ---------------   ------------------------  ----------
+ProcessMonitor      um1       ACTIVE            Fri Oct 12 08:48:02 2018       14957
+ServerMonitor       um1       ACTIVE            Fri Oct 12 09:04:03 2018       23718
+DBRMWorkerNode      um1       ACTIVE            Fri Oct 12 09:04:03 2018       23745
+ExeMgr              um1       ACTIVE            Fri Oct 12 09:04:26 2018       27216
+DDLProc             um1       ACTIVE            Fri Oct 12 09:04:31 2018       27237
+DMLProc             um1       ACTIVE            Fri Oct 12 09:04:35 2018       27270
+mysqld              um1       ACTIVE            Fri Oct 12 09:04:25 2018       23657
+
+ProcessMonitor      pm1       ACTIVE            Fri Oct 12 08:46:10 2018       23628
+ProcessManager      pm1       ACTIVE            Fri Oct 12 08:46:16 2018       23895
+DBRMControllerNode  pm1       ACTIVE            Fri Oct 12 09:03:59 2018       67900
+ServerMonitor       pm1       ACTIVE            Fri Oct 12 09:04:01 2018       67927
+DBRMWorkerNode      pm1       ACTIVE            Fri Oct 12 09:04:01 2018       67967
+DecomSvr            pm1       ACTIVE            Fri Oct 12 09:04:05 2018       68181
+PrimProc            pm1       ACTIVE            Fri Oct 12 09:04:07 2018       68296
+WriteEngineServer   pm1       ACTIVE            Fri Oct 12 09:04:08 2018       68361
+
+ProcessMonitor      pm2       ACTIVE            Fri Oct 12 08:48:13 2018       13892
+ProcessManager      pm2       HOT_STANDBY       Fri Oct 12 09:03:54 2018       15924
+DBRMControllerNode  pm2       COLD_STANDBY      Fri Oct 12 09:04:04 2018
+ServerMonitor       pm2       ACTIVE            Fri Oct 12 09:04:07 2018       16025
+DBRMWorkerNode      pm2       ACTIVE            Fri Oct 12 09:04:08 2018       16054
+DecomSvr            pm2       ACTIVE            Fri Oct 12 09:04:12 2018       16070
+PrimProc            pm2       ACTIVE            Fri Oct 12 09:04:14 2018       16081
+WriteEngineServer   pm2       ACTIVE            Fri Oct 12 09:04:15 2018       16090
+
+ProcessMonitor      pm3       ACTIVE            Fri Oct 12 08:48:14 2018       13772
+ProcessManager      pm3       COLD_STANDBY      Fri Oct 12 09:04:09 2018
+DBRMControllerNode  pm3       COLD_STANDBY      Fri Oct 12 09:04:09 2018
+ServerMonitor       pm3       ACTIVE            Fri Oct 12 09:04:12 2018       15565
+DBRMWorkerNode      pm3       ACTIVE            Fri Oct 12 09:04:13 2018       15592
+DecomSvr            pm3       ACTIVE            Fri Oct 12 09:04:17 2018       15607
+PrimProc            pm3       ACTIVE            Fri Oct 12 09:04:19 2018       15617
+WriteEngineServer   pm3       ACTIVE            Fri Oct 12 09:04:20 2018       15626
+
+ProcessMonitor      pm4       ACTIVE            Fri Oct 12 08:48:06 2018       13704
+ProcessManager      pm4       COLD_STANDBY      Fri Oct 12 09:04:14 2018
+DBRMControllerNode  pm4       COLD_STANDBY      Fri Oct 12 09:04:14 2018
+ServerMonitor       pm4       ACTIVE            Fri Oct 12 09:04:17 2018       15460
+DBRMWorkerNode      pm4       ACTIVE            Fri Oct 12 09:04:18 2018       15487
+DecomSvr            pm4       ACTIVE            Fri Oct 12 09:04:22 2018       15502
+PrimProc            pm4       ACTIVE            Fri Oct 12 09:04:24 2018       15512
+WriteEngineServer   pm4       ACTIVE            Fri Oct 12 09:04:25 2018       15521
+[mariadb-user@ip-172-31-26-232 ~]$ mcsadmin getModuleTypeConfig
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getmoduletypeconfig   Fri Oct 12 09:42:46 2018
+
+Module Type Configuration
+
+ModuleType 'um' Configuration information
+
+ModuleDesc = User Module
+RunType = SIMPLEX
+ModuleCount = 1
+ModuleHostName and ModuleIPAddr for NIC ID 1 on  module 'um1' = i-0792a26cb0d3fd297 , 172.31.26.232
+ModuleCPUCriticalThreshold % = 0
+ModuleCPUMajorThreshold % = 0
+ModuleCPUMinorThreshold % = 0
+ModuleCPUMinorClearThreshold % = 0
+ModuleDiskCriticalThreshold % = 90
+ModuleDiskMajorThreshold % = 80
+ModuleDiskMinorThreshold % = 70
+ModuleMemCriticalThreshold % = 90
+ModuleMemMajorThreshold % = 0
+ModuleMemMinorThreshold % = 0
+ModuleSwapCriticalThreshold % = 90
+ModuleSwapMajorThreshold % = 80
+ModuleSwapMinorThreshold % = 70
+ModuleDiskMonitorFileSystem#1 = /
+
+ModuleType 'pm' Configuration information
+
+ModuleDesc = Performance Module
+RunType = SIMPLEX
+ModuleCount = 4
+ModuleHostName and ModuleIPAddr for NIC ID 1 on  module 'pm1' = i-05eaf06a841317af5 , 172.31.21.62
+ModuleHostName and ModuleIPAddr for NIC ID 1 on  module 'pm2' = i-02b64acbfc667408b , 172.31.24.16
+ModuleHostName and ModuleIPAddr for NIC ID 1 on  module 'pm3' = i-01dfb9ad14aa743c2 , 172.31.31.174
+ModuleHostName and ModuleIPAddr for NIC ID 1 on  module 'pm4' = i-095f0de09f7f4e6d7 , 172.31.20.51
+DBRootIDs assigned to module 'pm1' = 1
+DBRootIDs assigned to module 'pm2' = 2
+DBRootIDs assigned to module 'pm3' = 3
+DBRootIDs assigned to module 'pm4' = 4
+ModuleCPUCriticalThreshold % = 0
+ModuleCPUMajorThreshold % = 0
+ModuleCPUMinorThreshold % = 0
+ModuleCPUMinorClearThreshold % = 0
+ModuleDiskCriticalThreshold % = 90
+ModuleDiskMajorThreshold % = 80
+ModuleDiskMinorThreshold % = 70
+ModuleMemCriticalThreshold % = 90
+ModuleMemMajorThreshold % = 0
+ModuleMemMinorThreshold % = 0
+ModuleSwapCriticalThreshold % = 90
+ModuleSwapMajorThreshold % = 80
+ModuleSwapMinorThreshold % = 70
+ModuleDiskMonitorFileSystem#1 = /
+
+[mariadb-user@ip-172-31-21-62 ~]$ mcsadmin getAlarmSummary
+getalarmsummary   Fri Oct 12 09:45:30 2018
+
+Active Alarm Counts: Critical = 0, Major = 0, Minor = 0, Warning = 0, Info = 0
+[mariadb-user@ip-172-31-21-62 ~]$ mcsadmin getActiveAlarms
+getactivealarms   Fri Oct 12 09:45:46 2018
+
+Active Alarm List:
+
+/* After the load was completed */
+[mariadb-user@ip-172-31-26-232 ssb]$ mcsadmin getSystemResourceUsage
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemresourceusage   Fri Oct 12 11:33:05 2018
+
+System Resource Usage per Module
+
+
+Module 'um1' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 4953032k used, 497313908k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: systemd 0%
+Top Memory Process Users: mysqld 1%, workernode 1%, DMLProc 1%, python 1%, DDLProc 1%
+Disk Usage: / 7%
+
+Module 'pm1' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3339784k used, 844548k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: top 12%
+Top Memory Process Users: PrimProc 1%, ProcMgr 1%, ProcMon 1%, workernode 1%, python 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data1 15%
+
+
+Module 'pm2' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3414688k used, 2274392k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: top 6%
+Top Memory Process Users: PrimProc 1%, python 1%, workernode 1%, ProcMon 1%, WriteEngineServ 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data2 15%
+
+
+Module 'pm3' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3421472k used, 2273752k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: top 6%
+Top Memory Process Users: PrimProc 1%, workernode 1%, ProcMon 1%, python 1%, WriteEngineServ 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data3 14%
+
+
+Module 'pm4' Resource Usage
+
+CPU: 0% Usage
+Mem:  503413436k total, 3390752k used, 2274572k cache, 0% Usage
+Swap: 2097148 k total, 0k used, 0% Usage
+Top CPU Process Users: systemd 0%
+Top Memory Process Users: PrimProc 1%, workernode 1%, ProcMon 1%, python 1%, WriteEngineServ 1%
+Disk Usage: / 7%, /home/mariadb-user/mariadb/columnstore/data4 14%
+
+[mariadb-user@ip-172-31-26-232 ssb]$ mcsadmin getSystemDisk
+
+WARNING: running on non Parent OAM Module, can't make configuration changes in this session.
+         Access Console from 'pm1' if you need to make changes.
+
+getsystemdisk   Fri Oct 12 11:34:25 2018
+
+System Disk Usage per Module
+
+Module 'um1' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6851216          7
+
+Module 'pm1' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6859692          7
+.../mariadb/columnstore/data1  412849328     58224752         15
+
+Module 'pm2' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6853180          7
+.../mariadb/columnstore/data2  412849328     58129528         15
+
+Module 'pm3' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6853272          7
+.../mariadb/columnstore/data3  412849328     57649248         14
+
+Module 'pm4' Disk Usage (in 1K blocks)
+
+Mount Point                    Total Blocks  Used Blocks   Usage %
+-----------------------------  ------------  ------------  -------
+/                              104846316     6853880          7
+.../mariadb/columnstore/data4  412849328     57656784         14
+
+
+/* During Power Test */
+[mariadb-user@ip-172-31-21-62 ~]$ mcsadmin getActiveSQLStatements
+getactivesqlstatements   Fri Oct 12 12:36:40 2018
+
+Get List of Active SQL Statements
+=================================
+
+Start Time        Time (hh:mm:ss)   Session ID             SQL Statement
+----------------  ----------------  --------------------   ------------------------------------------------------------
+Oct 12 12:36:18      00:00:22       38                     select d_year, s_nation, p_category, sum(lo_revenue - lo_sup
+                                                           plycost) as profit from dimdate, customer, supplier, part, l
+                                                           ineorder  where lo_custkey = c_custkey  and lo_suppkey = s_s
+                                                           uppkey  and lo_partkey = p_partkey  and lo_orderdate = d_dat
+                                                           ekey  and c_region = 'AMERICA'  and s_region = 'AMERICA'  an
+                                                           d (d_year = 1997 or d_year = 1998)  and (p_mfgr = 'MFGR#1'
+                                                           or p_mfgr = 'MFGR#2') group by d_year, s_nation, p_category
+                                                           order by d_year, s_nation, p_category; |ssb|
+
+/*During Throughput Test */
+[mariadb-user@ip-172-31-21-62 ~]$ mcsadmin getActiveSQLStatements
+getactivesqlstatements   Fri Oct 12 13:56:49 2018
+
+Get List of Active SQL Statements
+=================================
+
+Start Time        Time (hh:mm:ss)   Session ID             SQL Statement
+----------------  ----------------  --------------------   ------------------------------------------------------------
+Oct 12 13:56:48      00:00:01       29                     select sum(lo_extendedprice*lo_discount) as revenue  from li
+                                                           neorder, dimdate  where lo_orderdate = d_datekey  and d_year
+                                                           monthnum = 199401  and lo_discount between 4 and 6  and lo_q
+                                                           uantity between 26 and 35; |ssb|
+
+Oct 12 13:56:49      00:00:00       30                     select sum(lo_extendedprice*lo_discount) as revenue  from li
+                                                           neorder, dimdate  where lo_orderdate = d_datekey  and d_year
+                                                           monthnum = 199401  and lo_discount between 4 and 6  and lo_q
+                                                           uantity between 26 and 35; |ssb|
+
+Oct 12 13:56:48      00:00:01       31                     select sum(lo_extendedprice*lo_discount) as revenue  from li
+                                                           neorder, dimdate  where lo_orderdate = d_datekey  and d_year
+                                                           monthnum = 199401  and lo_discount between 4 and 6  and lo_q
+                                                           uantity between 26 and 35; |ssb|
+
+Oct 12 13:56:48      00:00:01       32                     select sum(lo_extendedprice*lo_discount) as revenue  from li
+                                                           neorder, dimdate  where lo_orderdate = d_datekey  and d_year
+                                                           monthnum = 199401  and lo_discount between 4 and 6  and lo_q
+                                                           uantity between 26 and 35; |ssb|
+
+Oct 12 13:56:48      00:00:01       33                     select sum(lo_extendedprice*lo_discount) as revenue  from li
+                                                           neorder, dimdate  where lo_orderdate = d_datekey  and d_year
+                                                           monthnum = 199401  and lo_discount between 4 and 6  and lo_q
+                                                           uantity between 26 and 35; |ssb|

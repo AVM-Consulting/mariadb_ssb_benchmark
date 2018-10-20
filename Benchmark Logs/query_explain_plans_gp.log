@@ -1,0 +1,458 @@
+Timing is on.
+Pager usage is off.
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=0.00..16389.13 rows=1 width=8)
+   ->  Gather Motion 64:1  (slice2; segments: 64)  (cost=0.00..16389.13 rows=1 width=8)
+         ->  Aggregate  (cost=0.00..16389.13 rows=1 width=8)
+               ->  Hash Join  (cost=0.00..16383.17 rows=3321460 width=8)
+                     Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                     ->  Table Scan on lineorder  (cost=0.00..11892.20 rows=21903472 width=12)
+                           Filter: lo_discount >= 1 AND lo_discount <= 3 AND lo_quantity < 25
+                     ->  Hash  (cost=431.01..431.01 rows=365 width=4)
+                           ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..431.01 rows=365 width=4)
+                                 ->  Table Scan on dimdate  (cost=0.00..431.00 rows=6 width=4)
+                                       Filter: d_year = 1993
+ Optimizer status: PQO version 3.1.0
+(12 rows)
+
+Time: 161.503 ms
+                                                     QUERY PLAN                                                      
+---------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=0.00..13612.06 rows=1 width=8)
+   ->  Gather Motion 64:1  (slice2; segments: 64)  (cost=0.00..13612.06 rows=1 width=8)
+         ->  Aggregate  (cost=0.00..13612.06 rows=1 width=8)
+               ->  Hash Join  (cost=0.00..13611.85 rows=118313 width=8)
+                     Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                     ->  Table Scan on lineorder  (cost=0.00..11513.75 rows=9186642 width=12)
+                           Filter: lo_discount >= 4 AND lo_discount <= 6 AND lo_quantity >= 26 AND lo_quantity <= 35
+                     ->  Hash  (cost=431.00..431.00 rows=31 width=4)
+                           ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..431.00 rows=31 width=4)
+                                 ->  Table Scan on dimdate  (cost=0.00..431.00 rows=1 width=4)
+                                       Filter: d_yearmonthnum = 199401
+ Optimizer status: PQO version 3.1.0
+(12 rows)
+
+Time: 60.482 ms
+                                                     QUERY PLAN                                                      
+---------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=0.00..13614.66 rows=1 width=8)
+   ->  Gather Motion 64:1  (slice2; segments: 64)  (cost=0.00..13614.66 rows=1 width=8)
+         ->  Aggregate  (cost=0.00..13614.66 rows=1 width=8)
+               ->  Hash Join  (cost=0.00..13614.57 rows=47594 width=8)
+                     Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                     ->  Table Scan on lineorder  (cost=0.00..11514.42 rows=9208969 width=12)
+                           Filter: lo_discount >= 5 AND lo_discount <= 7 AND lo_quantity >= 26 AND lo_quantity <= 35
+                     ->  Hash  (cost=431.00..431.00 rows=13 width=4)
+                           ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..431.00 rows=13 width=4)
+                                 ->  Table Scan on dimdate  (cost=0.00..431.00 rows=1 width=4)
+                                       Filter: d_weeknuminyear = 6 AND d_year = 1994
+ Optimizer status: PQO version 3.1.0
+(12 rows)
+
+Time: 57.586 ms
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice5; segments: 64)  (cost=0.00..28594.70 rows=3938 width=21)
+   Merge Key: dimdate.d_year, part.p_brand1
+   ->  GroupAggregate  (cost=0.00..28594.51 rows=62 width=21)
+         Group By: dimdate.d_year, part.p_brand1
+         ->  Sort  (cost=0.00..28594.51 rows=62 width=21)
+               Sort Key: dimdate.d_year, part.p_brand1
+               ->  Redistribute Motion 64:64  (slice4; segments: 64)  (cost=0.00..28594.47 rows=62 width=21)
+                     Hash Key: dimdate.d_year, part.p_brand1
+                     ->  Result  (cost=0.00..28594.46 rows=62 width=21)
+                           ->  HashAggregate  (cost=0.00..28594.46 rows=62 width=21)
+                                 Group By: dimdate.d_year, part.p_brand1
+                                 ->  Hash Join  (cost=0.00..28309.14 rows=1138582 width=17)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..27599.96 rows=1138582 width=17)
+                                             Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                             ->  Hash Join  (cost=0.00..25955.25 rows=5699417 width=21)
+                                                   Hash Cond: lineorder.lo_partkey = part.p_partkey
+                                                   ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                   ->  Hash  (cost=435.90..435.90 rows=80000 width=13)
+                                                         ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..435.90 rows=80000 width=13)
+                                                               ->  Table Scan on part  (cost=0.00..433.69 rows=1250 width=13)
+                                                                     Filter: p_category::text = 'MFGR#12'::text
+                                             ->  Hash  (cost=437.19..437.19 rows=400000 width=4)
+                                                   ->  Broadcast Motion 64:64  (slice2; segments: 64)  (cost=0.00..437.19 rows=400000 width=4)
+                                                         ->  Table Scan on supplier  (cost=0.00..433.79 rows=6250 width=4)
+                                                               Filter: s_region::text = 'AMERICA'::text
+                                       ->  Hash  (cost=431.05..431.05 rows=2556 width=8)
+                                             ->  Broadcast Motion 64:64  (slice3; segments: 64)  (cost=0.00..431.05 rows=2556 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=40 width=8)
+ Optimizer status: PQO version 3.1.0
+(30 rows)
+
+Time: 390.374 ms
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice5; segments: 64)  (cost=0.00..33283.62 rows=630 width=21)
+   Merge Key: dimdate.d_year, part.p_brand1
+   ->  GroupAggregate  (cost=0.00..33283.59 rows=10 width=21)
+         Group By: dimdate.d_year, part.p_brand1
+         ->  Sort  (cost=0.00..33283.59 rows=10 width=21)
+               Sort Key: dimdate.d_year, part.p_brand1
+               ->  Redistribute Motion 64:64  (slice4; segments: 64)  (cost=0.00..33283.59 rows=10 width=21)
+                     Hash Key: dimdate.d_year, part.p_brand1
+                     ->  Result  (cost=0.00..33283.59 rows=10 width=21)
+                           ->  HashAggregate  (cost=0.00..33283.59 rows=10 width=21)
+                                 Group By: dimdate.d_year, part.p_brand1
+                                 ->  Hash Join  (cost=0.00..32142.30 rows=4554328 width=17)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..30600.86 rows=4554328 width=17)
+                                             Hash Cond: lineorder.lo_partkey = part.p_partkey
+                                             ->  Hash Join  (cost=0.00..26368.94 rows=18728562 width=12)
+                                                   Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                   ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                   ->  Hash  (cost=437.19..437.19 rows=400000 width=4)
+                                                         ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..437.19 rows=400000 width=4)
+                                                               ->  Table Scan on supplier  (cost=0.00..433.79 rows=6250 width=4)
+                                                                     Filter: s_region::text = 'ASIA'::text
+                                             ->  Hash  (cost=442.61..442.61 rows=320000 width=13)
+                                                   ->  Broadcast Motion 64:64  (slice2; segments: 64)  (cost=0.00..442.61 rows=320000 width=13)
+                                                         ->  Table Scan on part  (cost=0.00..433.76 rows=5000 width=13)
+                                                               Filter: p_brand1::text >= 'MFGR#2221'::text AND p_brand1::text <= 'MFGR#2228'::text
+                                       ->  Hash  (cost=431.05..431.05 rows=2556 width=8)
+                                             ->  Broadcast Motion 64:64  (slice3; segments: 64)  (cost=0.00..431.05 rows=2556 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=40 width=8)
+ Optimizer status: PQO version 3.1.0
+(30 rows)
+
+Time: 320.732 ms
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice6; segments: 64)  (cost=0.00..26432.34 rows=7 width=21)
+   Merge Key: dimdate.d_year, part.p_brand1
+   ->  GroupAggregate  (cost=0.00..26432.34 rows=1 width=21)
+         Group By: dimdate.d_year, part.p_brand1
+         ->  Sort  (cost=0.00..26432.34 rows=1 width=21)
+               Sort Key: dimdate.d_year, part.p_brand1
+               ->  Redistribute Motion 64:64  (slice5; segments: 64)  (cost=0.00..26432.34 rows=1 width=21)
+                     Hash Key: dimdate.d_year, part.p_brand1
+                     ->  Result  (cost=0.00..26432.34 rows=1 width=21)
+                           ->  HashAggregate  (cost=0.00..26432.34 rows=1 width=21)
+                                 Group By: dimdate.d_year, part.p_brand1
+                                 ->  Hash Join  (cost=0.00..26425.20 rows=28465 width=17)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..25986.50 rows=28465 width=17)
+                                             Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                             ->  Redistribute Motion 64:64  (slice2; segments: 64)  (cost=0.00..25523.16 rows=142486 width=21)
+                                                   Hash Key: lineorder.lo_suppkey
+                                                   ->  Hash Join  (cost=0.00..25513.80 rows=142486 width=21)
+                                                         Hash Cond: lineorder.lo_partkey = part.p_partkey
+                                                         ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                         ->  Hash  (cost=433.70..433.70 rows=2000 width=13)
+                                                               ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..433.70 rows=2000 width=13)
+                                                                     ->  Table Scan on part  (cost=0.00..433.64 rows=32 width=13)
+                                                                           Filter: p_brand1::text = 'MFGR#2221'::text
+                                             ->  Hash  (cost=433.87..433.87 rows=6250 width=4)
+                                                   ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..433.87 rows=6250 width=4)
+                                                         Hash Key: supplier.s_suppkey
+                                                         ->  Table Scan on supplier  (cost=0.00..433.79 rows=6250 width=4)
+                                                               Filter: s_region::text = 'EUROPE'::text
+                                       ->  Hash  (cost=431.05..431.05 rows=2556 width=8)
+                                             ->  Broadcast Motion 64:64  (slice4; segments: 64)  (cost=0.00..431.05 rows=2556 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=40 width=8)
+ Optimizer status: PQO version 3.1.0
+(33 rows)
+
+Time: 284.912 ms
+                                                                         QUERY PLAN                                                                         
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice6; segments: 64)  (cost=0.00..36934.12 rows=890 width=28)
+   Merge Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+   ->  Sort  (cost=0.00..36934.07 rows=14 width=28)
+         Sort Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+         ->  HashAggregate  (cost=0.00..36934.06 rows=14 width=28)
+               Group By: dimdate.d_year, customer.c_nation, supplier.s_nation
+               ->  Redistribute Motion 64:64  (slice5; segments: 64)  (cost=0.00..36934.05 rows=14 width=28)
+                     Hash Key: dimdate.d_year, customer.c_nation, supplier.s_nation
+                     ->  Result  (cost=0.00..36934.05 rows=14 width=28)
+                           ->  HashAggregate  (cost=0.00..36934.05 rows=14 width=28)
+                                 Group By: dimdate.d_year, customer.c_nation, supplier.s_nation
+                                 ->  Hash Join  (cost=0.00..34771.39 rows=5732506 width=24)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..32672.17 rows=6294788 width=24)
+                                             Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                             ->  Redistribute Motion 64:64  (slice2; segments: 64)  (cost=0.00..28145.29 rows=18728562 width=20)
+                                                   Hash Key: lineorder.lo_custkey
+                                                   ->  Hash Join  (cost=0.00..26972.88 rows=18728562 width=20)
+                                                         Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                         ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                         ->  Hash  (cost=444.09..444.09 rows=400000 width=12)
+                                                               ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..444.09 rows=400000 width=12)
+                                                                     ->  Table Scan on supplier  (cost=0.00..433.88 rows=6250 width=12)
+                                                                           Filter: s_region::text = 'ASIA'::text
+                                             ->  Hash  (cost=480.07..480.07 rows=93750 width=12)
+                                                   ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..480.07 rows=93750 width=12)
+                                                         Hash Key: customer.c_custkey
+                                                         ->  Table Scan on customer  (cost=0.00..476.55 rows=93750 width=12)
+                                                               Filter: c_region::text = 'ASIA'::text
+                                       ->  Hash  (cost=431.04..431.04 rows=2192 width=8)
+                                             ->  Broadcast Motion 64:64  (slice4; segments: 64)  (cost=0.00..431.04 rows=2192 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=35 width=8)
+                                                         Filter: d_year >= 1992 AND d_year <= 1997
+ Optimizer status: PQO version 3.1.0
+(34 rows)
+
+Time: 345.864 ms
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice6; segments: 64)  (cost=0.00..27926.43 rows=88990 width=34)
+   Merge Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+   ->  Sort  (cost=0.00..27919.56 rows=1391 width=34)
+         Sort Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+         ->  HashAggregate  (cost=0.00..27916.76 rows=1391 width=34)
+               Group By: dimdate.d_year, customer.c_city, supplier.s_city
+               ->  Redistribute Motion 64:64  (slice5; segments: 64)  (cost=0.00..27916.22 rows=1391 width=34)
+                     Hash Key: dimdate.d_year, customer.c_city, supplier.s_city
+                     ->  Result  (cost=0.00..27916.07 rows=1391 width=34)
+                           ->  HashAggregate  (cost=0.00..27916.07 rows=1391 width=34)
+                                 Group By: dimdate.d_year, customer.c_city, supplier.s_city
+                                 ->  Hash Join  (cost=0.00..27828.70 rows=229301 width=30)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..27324.61 rows=251792 width=30)
+                                             Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                             ->  Redistribute Motion 64:64  (slice2; segments: 64)  (cost=0.00..26111.52 rows=3745713 width=23)
+                                                   Hash Key: lineorder.lo_custkey
+                                                   ->  Hash Join  (cost=0.00..25841.87 rows=3745713 width=23)
+                                                         Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                         ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                         ->  Hash  (cost=436.27..436.27 rows=80000 width=15)
+                                                               ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..436.27 rows=80000 width=15)
+                                                                     ->  Table Scan on supplier  (cost=0.00..433.71 rows=1250 width=15)
+                                                                           Filter: s_nation::text = 'UNITED STATES'::text
+                                             ->  Hash  (cost=474.92..474.92 rows=18750 width=15)
+                                                   ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..474.92 rows=18750 width=15)
+                                                         Hash Key: customer.c_custkey
+                                                         ->  Table Scan on customer  (cost=0.00..474.04 rows=18750 width=15)
+                                                               Filter: c_nation::text = 'UNITED STATES'::text
+                                       ->  Hash  (cost=431.04..431.04 rows=2192 width=8)
+                                             ->  Broadcast Motion 64:64  (slice4; segments: 64)  (cost=0.00..431.04 rows=2192 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=35 width=8)
+                                                         Filter: d_year >= 1992 AND d_year <= 1997
+ Optimizer status: PQO version 3.1.0
+(34 rows)
+
+Time: 308.531 ms
+                                                                              QUERY PLAN                                                                              
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice7; segments: 64)  (cost=0.00..26541.07 rows=6 width=34)
+   Merge Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+   ->  Sort  (cost=0.00..26541.07 rows=1 width=34)
+         Sort Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+         ->  GroupAggregate  (cost=0.00..26541.07 rows=1 width=34)
+               Group By: dimdate.d_year, customer.c_city, supplier.s_city
+               ->  Sort  (cost=0.00..26541.07 rows=1 width=34)
+                     Sort Key: dimdate.d_year, customer.c_city, supplier.s_city
+                     ->  Redistribute Motion 64:64  (slice6; segments: 64)  (cost=0.00..26541.07 rows=1 width=34)
+                           Hash Key: dimdate.d_year, customer.c_city, supplier.s_city
+                           ->  Result  (cost=0.00..26541.07 rows=1 width=34)
+                                 ->  HashAggregate  (cost=0.00..26541.07 rows=1 width=34)
+                                       Group By: dimdate.d_year, customer.c_city, supplier.s_city
+                                       ->  Hash Join  (cost=0.00..26540.20 rows=2294 width=30)
+                                             Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                             ->  Redistribute Motion 64:64  (slice4; segments: 64)  (cost=0.00..26108.46 rows=2519 width=30)
+                                                   Hash Key: lineorder.lo_orderdate
+                                                   ->  Hash Join  (cost=0.00..26108.22 rows=2519 width=30)
+                                                         Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                                         ->  Redistribute Motion 64:64  (slice2; segments: 64)  (cost=0.00..25563.40 rows=374619 width=23)
+                                                               Hash Key: lineorder.lo_custkey
+                                                               ->  Hash Join  (cost=0.00..25536.43 rows=374619 width=23)
+                                                                     Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                                     ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                                     ->  Hash  (cost=433.92..433.92 rows=8001 width=15)
+                                                                           ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..433.92 rows=8001 width=15)
+                                                                                 ->  Table Scan on supplier  (cost=0.00..433.66 rows=126 width=15)
+                                                                                       Filter: s_city::text = 'UNITED KI1'::text OR s_city::text = 'UNITED KI5'::text
+                                                         ->  Hash  (cost=473.37..473.37 rows=1876 width=15)
+                                                               ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..473.37 rows=1876 width=15)
+                                                                     Hash Key: customer.c_custkey
+                                                                     ->  Table Scan on customer  (cost=0.00..473.29 rows=1876 width=15)
+                                                                           Filter: c_city::text = 'UNITED KI1'::text OR c_city::text = 'UNITED KI5'::text
+                                             ->  Hash  (cost=431.00..431.00 rows=35 width=8)
+                                                   ->  Redistribute Motion 64:64  (slice5; segments: 64)  (cost=0.00..431.00 rows=35 width=8)
+                                                         Hash Key: dimdate.d_datekey
+                                                         ->  Table Scan on dimdate  (cost=0.00..431.00 rows=35 width=8)
+                                                               Filter: d_year >= 1992 AND d_year <= 1997
+ Optimizer status: PQO version 3.1.0
+(39 rows)
+
+Time: 321.412 ms
+                                                                           QUERY PLAN                                                                           
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice6; segments: 64)  (cost=0.00..26539.74 rows=7 width=34)
+   Merge Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+   ->  Sort  (cost=0.00..26539.74 rows=1 width=34)
+         Sort Key: dimdate.d_year, (pg_catalog.sum((sum(lineorder.lo_revenue))))
+         ->  GroupAggregate  (cost=0.00..26539.74 rows=1 width=34)
+               Group By: dimdate.d_year, customer.c_city, supplier.s_city
+               ->  Sort  (cost=0.00..26539.74 rows=1 width=34)
+                     Sort Key: dimdate.d_year, customer.c_city, supplier.s_city
+                     ->  Redistribute Motion 64:64  (slice5; segments: 64)  (cost=0.00..26539.74 rows=1 width=34)
+                           Hash Key: dimdate.d_year, customer.c_city, supplier.s_city
+                           ->  Result  (cost=0.00..26539.74 rows=1 width=34)
+                                 ->  HashAggregate  (cost=0.00..26539.74 rows=1 width=34)
+                                       Group By: dimdate.d_year, customer.c_city, supplier.s_city
+                                       ->  Hash Join  (cost=0.00..26539.72 rows=32 width=30)
+                                             Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                             ->  Hash Join  (cost=0.00..26108.22 rows=2519 width=30)
+                                                   Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                                   ->  Redistribute Motion 64:64  (slice2; segments: 64)  (cost=0.00..25563.40 rows=374619 width=23)
+                                                         Hash Key: lineorder.lo_custkey
+                                                         ->  Hash Join  (cost=0.00..25536.43 rows=374619 width=23)
+                                                               Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                               ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=16)
+                                                               ->  Hash  (cost=433.92..433.92 rows=8001 width=15)
+                                                                     ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..433.92 rows=8001 width=15)
+                                                                           ->  Table Scan on supplier  (cost=0.00..433.66 rows=126 width=15)
+                                                                                 Filter: s_city::text = 'UNITED KI1'::text OR s_city::text = 'UNITED KI5'::text
+                                                   ->  Hash  (cost=473.37..473.37 rows=1876 width=15)
+                                                         ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..473.37 rows=1876 width=15)
+                                                               Hash Key: customer.c_custkey
+                                                               ->  Table Scan on customer  (cost=0.00..473.29 rows=1876 width=15)
+                                                                     Filter: c_city::text = 'UNITED KI1'::text OR c_city::text = 'UNITED KI5'::text
+                                             ->  Hash  (cost=431.00..431.00 rows=31 width=8)
+                                                   ->  Broadcast Motion 64:64  (slice4; segments: 64)  (cost=0.00..431.00 rows=31 width=8)
+                                                         ->  Table Scan on dimdate  (cost=0.00..431.00 rows=1 width=8)
+                                                               Filter: d_yearmonth::text = 'Dec1997'::text
+ Optimizer status: PQO version 3.1.0
+(36 rows)
+
+Time: 295.351 ms
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice7; segments: 64)  (cost=0.00..36439.55 rows=99 width=20)
+   Merge Key: dimdate.d_year, customer.c_nation
+   ->  GroupAggregate  (cost=0.00..36439.54 rows=2 width=20)
+         Group By: dimdate.d_year, customer.c_nation
+         ->  Sort  (cost=0.00..36439.54 rows=2 width=20)
+               Sort Key: dimdate.d_year, customer.c_nation
+               ->  Redistribute Motion 64:64  (slice6; segments: 64)  (cost=0.00..36439.54 rows=2 width=20)
+                     Hash Key: dimdate.d_year, customer.c_nation
+                     ->  Result  (cost=0.00..36439.54 rows=2 width=20)
+                           ->  HashAggregate  (cost=0.00..36439.54 rows=2 width=20)
+                                 Group By: dimdate.d_year, customer.c_nation
+                                 ->  Hash Join  (cost=0.00..35961.01 rows=1913428 width=20)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..35039.45 rows=1913428 width=20)
+                                             Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                             ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..33345.63 rows=5692924 width=16)
+                                                   Hash Key: lineorder.lo_custkey
+                                                   ->  Hash Join  (cost=0.00..33060.52 rows=5692924 width=16)
+                                                         Hash Cond: lineorder.lo_partkey = part.p_partkey
+                                                         ->  Hash Join  (cost=0.00..28745.09 rows=18728562 width=20)
+                                                               Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                               ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=24)
+                                                               ->  Hash  (cost=437.19..437.19 rows=400000 width=4)
+                                                                     ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..437.19 rows=400000 width=4)
+                                                                           ->  Table Scan on supplier  (cost=0.00..433.79 rows=6250 width=4)
+                                                                                 Filter: s_region::text = 'AMERICA'::text
+                                                         ->  Hash  (cost=437.17..437.17 rows=400001 width=4)
+                                                               ->  Broadcast Motion 64:64  (slice2; segments: 64)  (cost=0.00..437.17 rows=400001 width=4)
+                                                                     ->  Table Scan on part  (cost=0.00..433.77 rows=6251 width=4)
+                                                                           Filter: p_mfgr::text = 'MFGR#1'::text OR p_mfgr::text = 'MFGR#2'::text
+                                             ->  Hash  (cost=480.07..480.07 rows=93750 width=12)
+                                                   ->  Redistribute Motion 64:64  (slice4; segments: 64)  (cost=0.00..480.07 rows=93750 width=12)
+                                                         Hash Key: customer.c_custkey
+                                                         ->  Table Scan on customer  (cost=0.00..476.55 rows=93750 width=12)
+                                                               Filter: c_region::text = 'AMERICA'::text
+                                       ->  Hash  (cost=431.05..431.05 rows=2556 width=8)
+                                             ->  Broadcast Motion 64:64  (slice5; segments: 64)  (cost=0.00..431.05 rows=2556 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=40 width=8)
+ Optimizer status: PQO version 3.1.0
+(39 rows)
+
+Time: 481.302 ms
+                                                                            QUERY PLAN                                                                            
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice7; segments: 64)  (cost=0.00..37578.58 rows=352 width=28)
+   Merge Key: dimdate.d_year, supplier.s_nation, part.p_category
+   ->  GroupAggregate  (cost=0.00..37578.55 rows=6 width=28)
+         Group By: dimdate.d_year, supplier.s_nation, part.p_category
+         ->  Sort  (cost=0.00..37578.55 rows=6 width=28)
+               Sort Key: dimdate.d_year, supplier.s_nation, part.p_category
+               ->  Redistribute Motion 64:64  (slice6; segments: 64)  (cost=0.00..37578.55 rows=6 width=28)
+                     Hash Key: dimdate.d_year, supplier.s_nation, part.p_category
+                     ->  Result  (cost=0.00..37578.55 rows=6 width=28)
+                           ->  HashAggregate  (cost=0.00..37578.55 rows=6 width=28)
+                                 Group By: dimdate.d_year, supplier.s_nation, part.p_category
+                                 ->  Hash Join  (cost=0.00..37359.62 rows=580308 width=28)
+                                       Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                       ->  Hash Join  (cost=0.00..36506.35 rows=1913428 width=28)
+                                             Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                             ->  Redistribute Motion 64:64  (slice3; segments: 64)  (cost=0.00..34724.25 rows=5692924 width=32)
+                                                   Hash Key: lineorder.lo_custkey
+                                                   ->  Hash Join  (cost=0.00..34154.04 rows=5692924 width=32)
+                                                         Hash Cond: lineorder.lo_partkey = part.p_partkey
+                                                         ->  Hash Join  (cost=0.00..29349.02 rows=18728562 width=28)
+                                                               Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                               ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=24)
+                                                               ->  Hash  (cost=444.09..444.09 rows=400000 width=12)
+                                                                     ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..444.09 rows=400000 width=12)
+                                                                           ->  Table Scan on supplier  (cost=0.00..433.88 rows=6250 width=12)
+                                                                                 Filter: s_region::text = 'AMERICA'::text
+                                                         ->  Hash  (cost=444.07..444.07 rows=400001 width=12)
+                                                               ->  Broadcast Motion 64:64  (slice2; segments: 64)  (cost=0.00..444.07 rows=400001 width=12)
+                                                                     ->  Table Scan on part  (cost=0.00..433.86 rows=6251 width=12)
+                                                                           Filter: p_mfgr::text = 'MFGR#1'::text OR p_mfgr::text = 'MFGR#2'::text
+                                             ->  Hash  (cost=476.33..476.33 rows=93750 width=4)
+                                                   ->  Redistribute Motion 64:64  (slice4; segments: 64)  (cost=0.00..476.33 rows=93750 width=4)
+                                                         Hash Key: customer.c_custkey
+                                                         ->  Table Scan on customer  (cost=0.00..475.15 rows=93750 width=4)
+                                                               Filter: c_region::text = 'AMERICA'::text
+                                       ->  Hash  (cost=431.02..431.02 rows=730 width=8)
+                                             ->  Broadcast Motion 64:64  (slice5; segments: 64)  (cost=0.00..431.02 rows=730 width=8)
+                                                   ->  Table Scan on dimdate  (cost=0.00..431.00 rows=12 width=8)
+                                                         Filter: d_year = 1997 OR d_year = 1998
+ Optimizer status: PQO version 3.1.0
+(40 rows)
+
+Time: 434.116 ms
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather Motion 64:1  (slice7; segments: 64)  (cost=0.00..30042.84 rows=140625 width=32)
+   Merge Key: dimdate.d_year, supplier.s_city, part.p_brand1
+   ->  GroupAggregate  (cost=0.00..30032.61 rows=2198 width=32)
+         Group By: dimdate.d_year, supplier.s_city, part.p_brand1
+         ->  Sort  (cost=0.00..30032.50 rows=2198 width=32)
+               Sort Key: dimdate.d_year, supplier.s_city, part.p_brand1
+               ->  Redistribute Motion 64:64  (slice6; segments: 64)  (cost=0.00..30028.08 rows=2198 width=32)
+                     Hash Key: dimdate.d_year, supplier.s_city, part.p_brand1
+                     ->  Result  (cost=0.00..30027.86 rows=2198 width=32)
+                           ->  HashAggregate  (cost=0.00..30027.86 rows=2198 width=32)
+                                 Group By: dimdate.d_year, supplier.s_city, part.p_brand1
+                                 ->  Hash Join  (cost=0.00..30019.02 rows=23213 width=32)
+                                       Hash Cond: lineorder.lo_custkey = customer.c_custkey
+                                       ->  Redistribute Motion 64:64  (slice4; segments: 64)  (cost=0.00..29508.69 rows=69063 width=36)
+                                             Hash Key: lineorder.lo_custkey
+                                             ->  Hash Join  (cost=0.00..29500.91 rows=69063 width=36)
+                                                   Hash Cond: lineorder.lo_orderdate = dimdate.d_datekey
+                                                   ->  Hash Join  (cost=0.00..29016.42 rows=227717 width=36)
+                                                         Hash Cond: lineorder.lo_partkey = part.p_partkey
+                                                         ->  Hash Join  (cost=0.00..27798.49 rows=3745713 width=31)
+                                                               Hash Cond: lineorder.lo_suppkey = supplier.s_suppkey
+                                                               ->  Table Scan on lineorder  (cost=0.00..5071.62 rows=93749840 width=24)
+                                                               ->  Hash  (cost=436.27..436.27 rows=80000 width=15)
+                                                                     ->  Broadcast Motion 64:64  (slice1; segments: 64)  (cost=0.00..436.27 rows=80000 width=15)
+                                                                           ->  Table Scan on supplier  (cost=0.00..433.71 rows=1250 width=15)
+                                                                                 Filter: s_nation::text = 'UNITED STATES'::text
+                                                         ->  Hash  (cost=435.90..435.90 rows=80000 width=13)
+                                                               ->  Broadcast Motion 64:64  (slice2; segments: 64)  (cost=0.00..435.90 rows=80000 width=13)
+                                                                     ->  Table Scan on part  (cost=0.00..433.69 rows=1250 width=13)
+                                                                           Filter: p_category::text = 'MFGR#14'::text
+                                                   ->  Hash  (cost=431.02..431.02 rows=730 width=8)
+                                                         ->  Broadcast Motion 64:64  (slice3; segments: 64)  (cost=0.00..431.02 rows=730 width=8)
+                                                               ->  Table Scan on dimdate  (cost=0.00..431.00 rows=12 width=8)
+                                                                     Filter: d_year = 1997 OR d_year = 1998
+                                       ->  Hash  (cost=476.33..476.33 rows=93750 width=4)
+                                             ->  Redistribute Motion 64:64  (slice5; segments: 64)  (cost=0.00..476.33 rows=93750 width=4)
+                                                   Hash Key: customer.c_custkey
+                                                   ->  Table Scan on customer  (cost=0.00..475.15 rows=93750 width=4)
+                                                         Filter: c_region::text = 'AMERICA'::text
+ Optimizer status: PQO version 3.1.0
+(40 rows)
+
+Time: 466.796 ms

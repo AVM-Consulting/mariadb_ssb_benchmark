@@ -1,0 +1,103 @@
+ssb=# SELECT gp_segment_id, COUNT(*) FROM orders.lineorder_s GROUP BY gp_segment_id ORDER BY gp_segment_id;
+ gp_segment_id |  count
+---------------+----------
+             0 | 92281795
+             1 | 94750519
+             2 | 94752588
+             3 | 94762798
+             4 | 92273104
+             5 | 89787892
+             6 | 94770261
+             7 | 94760831
+             8 | 94766743
+             9 | 94750647
+            10 | 94775964
+            11 | 94764704
+            12 | 94762952
+            13 | 92254010
+            14 | 94749956
+            15 | 92235674
+            16 | 89771921
+            17 | 94773939
+            18 | 94768397
+            19 | 94776298
+            20 | 94772416
+            21 | 94752382
+            22 | 92257745
+            23 | 94781102
+            24 | 92266677
+            25 | 92270452
+            26 | 92280047
+            27 | 94773972
+            28 | 94769359
+            29 | 92268997
+            30 | 94744177
+            31 | 94759990
+            32 | 94764135
+            33 | 92264268
+            34 | 92288924
+            35 | 92260322
+            36 | 94750620
+            37 | 94774999
+            38 | 94767812
+            39 | 94762137
+            40 | 94746048
+            41 | 94776686
+            42 | 94767768
+            43 | 94754992
+            44 | 92271851
+            45 | 94768011
+            46 | 92265809
+           47 | 94752424
+            48 | 94733315
+            49 | 94771441
+            50 | 92291407
+            51 | 92278876
+            52 | 94755666
+            53 | 94753840
+            54 | 92285008
+            55 | 89775648
+            56 | 94757427
+            57 | 94772446
+            58 | 94767169
+            59 | 92267221
+            60 | 92257662
+            61 | 94767583
+            62 | 94760454
+            63 | 92269431
+(64 rows)
+
+ssb=# SELECT 'Lineorder_s Table' AS "Lineorder_s",
+ssb-#     max(c) AS "Max Seg Rows", min(c) AS "Min Seg Rows",
+ssb-#     (max(c)-min(c))*100.0/max(c) AS "Percentage Difference Between Max & Min"
+ssb-# FROM (SELECT count(*) c, gp_segment_id FROM orders.lineorder_s GROUP BY 2) AS a;
+    Lineorder_s    | Max Seg Rows | Min Seg Rows | Percentage Difference Between
+ Max & Min
+-------------------+--------------+--------------+------------------------------
+-----------
+ Lineorder_s Table |     94781102 |     89771921 |                      5.284999
+7460464218
+(1 row)
+
+ssb=# select * from gp_toolkit.gp_skew_coefficients;
+ skcoid | skcnamespace | skcrelname  |          skccoeff
+--------+--------------+-------------+-----------------------------
+  17362 | orders       | customer    | 0.0010990224933626734293000
+  17348 | orders       | part        |     0.017047608406487767000
+  17355 | orders       | supplier    | 0.0114883515885536086400000
+  17369 | orders       | dimdate     |     2.921231090245174836000
+  17376 | orders       | lineorder   | 0.0000044861297397562186000
+  17937 | orders       | lineorder_s |     1.551014375021488891000
+(6 rows)
+
+ssb=# select * from gp_toolkit.gp_skew_idle_fractions;
+ sifoid | sifnamespace | sifrelname  |        siffraction
+--------+--------------+-------------+----------------------------
+  17362 | orders       | customer    | 0.000027732564216885718369
+  17348 | orders       | part        |     0.00035187613959886120
+  17355 | orders       | supplier    |     0.00028791707988099427
+  17369 | orders       | dimdate     |     0.04910714285714285714
+  17376 | orders       | lineorder   | 0.000000093833485468691107
+  17937 | orders       | lineorder_s |     0.01088046852288128070
+(6 rows)
+

@@ -1,0 +1,18 @@
+ssb=#      select * from gp_resq_activity;
+ resqprocpid | resqrole | resqoid | resqname | resqstart | resqstatus
+-------------+----------+---------+----------+-----------+------------
+(0 rows)
+
+ssb=# select * from gp_resq_activity_by_queue;
+ resqoid | resqname | resqlast | resqstatus | resqtotal
+---------+----------+----------+------------+-----------
+(0 rows)
+
+ssb=# select * from gp_resqueue_status;
+ queueid |  rsqname   | rsqcountlimit | rsqcountvalue | rsqcostlimit | rsqcostva
+lue | rsqmemorylimit | rsqmemoryvalue | rsqwaiters | rsqholders
+---------+------------+---------------+---------------+--------------+----------
+----+----------------+----------------+------------+------------
+    6055 | pg_default |            64 |             0 |           -1 |
+  0 |             -1 |              0 |          0 |          0
+(1 row)

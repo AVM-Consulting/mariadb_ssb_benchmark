@@ -1,0 +1,928 @@
+ssb=# SELECT gp_segment_id, COUNT(*) FROM orders.lineorder GROUP BY gp_segment_id ORDER BY gp_segment_id;
+ gp_segment_id |  count
+---------------+----------
+             0 | 93749835
+             1 | 93749843
+             2 | 93749843
+             3 | 93749837
+             4 | 93749840
+             5 | 93749848
+             6 | 93749842
+             7 | 93749842
+             8 | 93749834
+             9 | 93749832
+            10 | 93749842
+            11 | 93749842
+            12 | 93749840
+            13 | 93749844
+            14 | 93749840
+            15 | 93749839
+            16 | 93749844
+            17 | 93749838
+            18 | 93749838
+            19 | 93749840
+            20 | 93749838
+            21 | 93749835
+            22 | 93749836
+            23 | 93749834
+            24 | 93749844
+            25 | 93749847
+            26 | 93749841
+            27 | 93749841
+            28 | 93749843
+            29 | 93749839
+            30 | 93749836
+            31 | 93749840
+            32 | 93749843
+            33 | 93749830
+            34 | 93749832
+            35 | 93749838
+            36 | 93749842
+            37 | 93749832
+            38 | 93749840
+            39 | 93749840
+            40 | 93749845
+            41 | 93749838
+            42 | 93749841
+            43 | 93749835
+            44 | 93749833
+            45 | 93749835
+            46 | 93749837
+            47 | 93749844
+            48 | 93749837
+            49 | 93749843
+            50 | 93749838
+            51 | 93749835
+            52 | 93749835
+            53 | 93749841
+            54 | 93749845
+            55 | 93749841
+            56 | 93749834
+            57 | 93749836
+            58 | 93749839
+            59 | 93749845
+            60 | 93749838
+            61 | 93749848
+            62 | 93749840
+            63 | 93749832
+(64 rows)
+
+ssb=#      SELECT 'Lineorder Table' AS "Lineorder",
+ssb-#     max(c) AS "Max Seg Rows", min(c) AS "Min Seg Rows",
+ssb-#     (max(c)-min(c))*100.0/max(c) AS "Percentage Difference Between Max & Min"
+ssb-# FROM (SELECT count(*) c, gp_segment_id FROM orders.lineorder GROUP BY 2) AS a;
+
+    Lineorder    | Max Seg Rows | Min Seg Rows | Percentage Difference Between M
+ax & Min
+-----------------+--------------+--------------+--------------------------------
+---------
+ Lineorder Table |     93749848 |     93749830 |              0.0000192000311296
+50471540
+(1 row)
+
+ssb=#
+ssb=# select * from gp_toolkit.gp_skew_coefficients;
+ skcoid | skcnamespace | skcrelname |          skccoeff
+--------+--------------+------------+-----------------------------
+  17362 | orders       | customer   | 0.0010990224933626734293000
+  17348 | orders       | part       |     0.017047608406487767000
+  17355 | orders       | supplier   | 0.0114883515885536086400000
+  17369 | orders       | dimdate    |     2.921231090245174836000
+  17376 | orders       | lineorder  | 0.0000044861297397562186000
+(5 rows)
+
+ssb=# select * from gp_toolkit.gp_skew_idle_fractions;
+ sifoid | sifnamespace | sifrelname |        siffraction
+--------+--------------+------------+----------------------------
+  17362 | orders       | customer   | 0.000027732564216885718369
+  17348 | orders       | part       |     0.00035187613959886120
+  17355 | orders       | supplier   |     0.00028791707988099427
+  17369 | orders       | dimdate    |     0.04910714285714285714
+  17376 | orders       | lineorder  | 0.000000093833485468691107
+(5 rows)
+
+
+ssb=# select * from gp_stats_missing;
+ smischema | smitable  | smisize | smicols | smirecs
+-----------+-----------+---------+---------+---------
+ orders    | lineorder | f       |      17 |       0
+(1 row)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_diag;
+ bdirelid | bdinspname | bdirelname | bdirelpages | bdiexppages | bdidiag
+----------+------------+------------+-------------+-------------+---------
+(0 rows)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_expected_pages LIMIT 5;
+ btdrelid | btdrelpages | btdexppages
+----------+-------------+-------------
+    11837 |           1 |          64
+    11847 |           1 |          64
+     2620 |           1 |          64
+     1260 |           1 |          64
+     1255 |          20 |          64
+(5 rows)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_expected_pages LIMIT 5;
+ btdrelid | btdrelpages | btdexppages
+----------+-------------+-------------
+    11837 |           1 |          64
+    11847 |           1 |          64
+     2620 |           1 |          64
+     1260 |           1 |          64
+     1255 |          20 |          64
+(5 rows)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_expected_pages LIMIT 5;
+ btdrelid | btdrelpages | btdexppages
+----------+-------------+-------------
+    11837 |           1 |          64
+    11847 |           1 |          64
+     2620 |           1 |          64
+     1260 |           1 |          64
+     1255 |          20 |          64
+(5 rows)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_expected_pages LIMIT 15;
+ btdrelid | btdrelpages | btdexppages
+----------+-------------+-------------
+    11837 |           1 |          64
+    11847 |           1 |          64
+     2620 |           1 |          64
+     1260 |           1 |          64
+     1255 |          20 |          64
+    11852 |           1 |          64
+     6059 |           1 |          64
+     3602 |           1 |          64
+     1214 |           1 |          64
+     2609 |           6 |          64
+     5091 |           1 |          64
+     2608 |          14 |          64
+     5004 |           1 |          64
+     2605 |           1 |          64
+    11842 |           1 |          64
+(15 rows)
+
+ssb=# select count(*) from gp_toolkit.gp_bloat_expected_pages;
+ count
+-------
+    54
+(1 row)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_diag;
+ bdirelid | bdinspname | bdirelname | bdirelpages | bdiexppages | bdidiag
+----------+------------+------------+-------------+-------------+---------
+(0 rows)
+
+ssb=# SELECT gp_segment_id, COUNT(*) FROM orders.part GROUP BY gp_segment_id ORDER BY gp_segment_id;
+ gp_segment_id | count
+---------------+-------
+             0 | 31239
+             1 | 31249
+             2 | 31253
+             3 | 31241
+             4 | 31242
+             5 | 31251
+             6 | 31256
+             7 | 31248
+             8 | 31248
+             9 | 31248
+            10 | 31248
+            11 | 31249
+            12 | 31242
+            13 | 31253
+            14 | 31245
+            15 | 31253
+            16 | 31249
+            17 | 31242
+            18 | 31246
+            19 | 31249
+            20 | 31247
+            21 | 31256
+            22 | 31258
+            23 | 31248
+            24 | 31251
+            25 | 31261
+            26 | 31243
+            27 | 31245
+            28 | 31245
+            29 | 31243
+            30 | 31250
+            31 | 31253
+            32 | 31255
+            33 | 31247
+            34 | 31249
+            35 | 31252
+            36 | 31254
+            37 | 31255
+            38 | 31244
+            39 | 31256
+            40 | 31251
+            41 | 31245
+            42 | 31249
+            43 | 31252
+            44 | 31251
+            45 | 31246
+            46 | 31255
+            47 | 31254
+            48 | 31257
+            49 | 31261
+            50 | 31255
+            51 | 31254
+            52 | 31258
+            53 | 31242
+            54 | 31244
+            55 | 31243
+            56 | 31252
+            57 | 31251
+            58 | 31255
+            59 | 31258
+            60 | 31260
+            61 | 31249
+            62 | 31249
+            63 | 31246
+(64 rows)
+
+ssb=# SELECT gp_segment_id, COUNT(*) FROM orders.supplier GROUP BY gp_segment_id ORDER BY gp_segment_id;
+ gp_segment_id | count
+---------------+-------
+             0 | 31248
+             1 | 31250
+             2 | 31250
+             3 | 31249
+             4 | 31253
+             5 | 31248
+             6 | 31245
+             7 | 31251
+             8 | 31247
+             9 | 31249
+            10 | 31249
+            11 | 31252
+            12 | 31250
+            13 | 31250
+            14 | 31255
+            15 | 31251
+            16 | 31245
+            17 | 31249
+            18 | 31251
+            19 | 31249
+            20 | 31250
+            21 | 31246
+            22 | 31248
+            23 | 31259
+            24 | 31248
+            25 | 31257
+            26 | 31253
+            27 | 31251
+            28 | 31254
+            29 | 31250
+            30 | 31255
+            31 | 31251
+            32 | 31250
+            33 | 31256
+            34 | 31245
+            35 | 31245
+            36 | 31254
+            37 | 31248
+            38 | 31252
+            39 | 31251
+            40 | 31251
+            41 | 31251
+            42 | 31253
+            43 | 31254
+            44 | 31254
+            45 | 31253
+            46 | 31247
+            47 | 31246
+            48 | 31248
+            49 | 31248
+            50 | 31254
+            51 | 31245
+            52 | 31241
+            53 | 31247
+            54 | 31256
+            55 | 31245
+            56 | 31247
+            57 | 31246
+            58 | 31251
+            59 | 31254
+            60 | 31253
+            61 | 31252
+            62 | 31245
+            63 | 31245
+(64 rows)
+
+ssb=#  SELECT gp_segment_id, COUNT(*) FROM orders.dimdate GROUP BY gp_segment_id ORDER BY gp_segment_id;
+ gp_segment_id | count
+---------------+-------
+             0 |    40
+             1 |    39
+             2 |    42
+             3 |    38
+             4 |    38
+             5 |    42
+             6 |    40
+             7 |    40
+             8 |    39
+             9 |    41
+            10 |    40
+            11 |    42
+            12 |    40
+            13 |    40
+            14 |    39
+            15 |    39
+            16 |    39
+            17 |    40
+            18 |    37
+            19 |    41
+            20 |    42
+            21 |    40
+            22 |    39
+            23 |    41
+            24 |    42
+            25 |    39
+            26 |    41
+            27 |    41
+            28 |    40
+            29 |    39
+            30 |    41
+            31 |    39
+            32 |    40
+            33 |    41
+            34 |    39
+            35 |    42
+            36 |    42
+            37 |    39
+            38 |    41
+            39 |    41
+            40 |    39
+            41 |    40
+            42 |    41
+            43 |    38
+            44 |    40
+            45 |    39
+            46 |    39
+            47 |    39
+            48 |    41
+            49 |    40
+            50 |    41
+            51 |    39
+            52 |    39
+            53 |    40
+            54 |    41
+            55 |    40
+            56 |    39
+            57 |    40
+            58 |    38
+            59 |    40
+            60 |    39
+            61 |    40
+            62 |    39
+            63 |    40
+(64 rows)
+
+ssb=#  SELECT gp_segment_id, COUNT(*) FROM orders.part GROUP BY gp_segment_id ORDER BY gp_segment_id;
+ gp_segment_id | count
+---------------+-------
+             0 | 31239
+             1 | 31249
+             2 | 31253
+             3 | 31241
+             4 | 31242
+             5 | 31251
+             6 | 31256
+             7 | 31248
+             8 | 31248
+             9 | 31248
+            10 | 31248
+            11 | 31249
+            12 | 31242
+            13 | 31253
+            14 | 31245
+            15 | 31253
+            16 | 31249
+            17 | 31242
+            18 | 31246
+            19 | 31249
+            20 | 31247
+            21 | 31256
+            22 | 31258
+            23 | 31248
+            24 | 31251
+            25 | 31261
+            26 | 31243
+            27 | 31245
+            28 | 31245
+            29 | 31243
+            30 | 31250
+            31 | 31253
+            32 | 31255
+            33 | 31247
+            34 | 31249
+            35 | 31252
+            36 | 31254
+            37 | 31255
+            38 | 31244
+            39 | 31256
+            40 | 31251
+            41 | 31245
+            42 | 31249
+            43 | 31252
+            44 | 31251
+            45 | 31246
+            46 | 31255
+            47 | 31254
+            48 | 31257
+            49 | 31261
+            50 | 31255
+            51 | 31254
+            52 | 31258
+            53 | 31242
+            54 | 31244
+            55 | 31243
+            56 | 31252
+            57 | 31251
+            58 | 31255
+            59 | 31258
+            60 | 31260
+            61 | 31249
+            62 | 31249
+            63 | 31246
+(64 rows)
+
+ssb=#     SELECT 'Part Table' AS "Part",
+ssb-#     max(c) AS "Max Seg Rows", min(c) AS "Min Seg Rows",
+ssb-#     (max(c)-min(c))*100.0/max(c) AS "Percentage Difference Between Max & Min"
+ssb-# FROM (SELECT count(*) c, gp_segment_id FROM orders.part GROUP BY 2) AS a;
+    Part    | Max Seg Rows | Min Seg Rows | Percentage Difference Between Max &
+Min
+------------+--------------+--------------+-------------------------------------
+----
+ Part Table |        31261 |        31239 |                  0.07037522791977224
+017
+(1 row)
+
+ssb=# SELECT 'Supplier Table' AS "Supplier",
+ssb-#     max(c) AS "Max Seg Rows", min(c) AS "Min Seg Rows",
+ssb-#     (max(c)-min(c))*100.0/max(c) AS "Percentage Difference Between Max & Min"
+ssb-# FROM (SELECT count(*) c, gp_segment_id FROM orders.supplier GROUP BY 2) AS a;
+    Supplier    | Max Seg Rows | Min Seg Rows | Percentage Difference Between Ma
+x & Min
+----------------+--------------+--------------+---------------------------------
+--------
+ Supplier Table |        31259 |        31241 |                  0.0575834159761
+9885473
+(1 row)
+
+ssb=# SELECT 'Customer Table' AS "Customer",
+ssb-#     max(c) AS "Max Seg Rows", min(c) AS "Min Seg Rows",
+ssb-#     (max(c)-min(c))*100.0/max(c) AS "Percentage Difference Between Max & Min"
+ssb-# FROM (SELECT count(*) c, gp_segment_id FROM orders.customer GROUP BY 2) AS a;
+    Customer    | Max Seg Rows | Min Seg Rows | Percentage Difference Between Ma
+x & Min
+----------------+--------------+--------------+---------------------------------
+--------
+ Customer Table |       468763 |       468737 |                  0.0055465128433
+7714367
+(1 row)
+
+ssb=# SELECT 'DWDate Table' AS "DWDate",
+ssb-#     max(c) AS "Max Seg Rows", min(c) AS "Min Seg Rows",
+ssb-#     (max(c)-min(c))*100.0/max(c) AS "Percentage Difference Between Max & Min"
+ssb-# FROM (SELECT count(*) c, gp_segment_id FROM orders.dimdate GROUP BY 2) AS a;
+    DWDate    | Max Seg Rows | Min Seg Rows | Percentage Difference Between Max
+& Min
+--------------+--------------+--------------+-----------------------------------
+------
+ DWDate Table |           42 |           37 |                     11.90476190476
+19048
+(1 row)
+
+ssb=# select * from gp_toolkit.gp_skew_coefficients;
+ skcoid | skcnamespace | skcrelname |          skccoeff
+--------+--------------+------------+-----------------------------
+  17362 | orders       | customer   | 0.0010990224933626734293000
+  17348 | orders       | part       |     0.017047608406487767000
+  17355 | orders       | supplier   | 0.0114883515885536086400000
+  17369 | orders       | dimdate    |     2.921231090245174836000
+  17376 | orders       | lineorder  |                           0
+(5 rows)
+
+ssb=# select * from gp_toolkit.gp_skew_idle_fractions;
+ sifoid | sifnamespace | sifrelname |        siffraction
+--------+--------------+------------+----------------------------
+  17362 | orders       | customer   | 0.000027732564216885718369
+  17348 | orders       | part       |     0.00035187613959886120
+  17355 | orders       | supplier   |     0.00028791707988099427
+  17369 | orders       | dimdate    |     0.04910714285714285714
+  17376 | orders       | lineorder  |                          0
+(5 rows)
+
+ssb=#
+ssb=# select * from gp_workfile_entries;
+ datname | procpid | sess_id | command_cnt | usename |           current_query
+          | segid | slice |   optype    | workmem | size | numfiles |
+          directory                     |  state
+---------+---------+---------+-------------+---------+--------------------------
+----------+-------+-------+-------------+---------+------+----------+-----------
+----------------------------------------+---------
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     9 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXYIArMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    31 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXuMBXwW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    21 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXKgqmxW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     3 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXEP88LN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    38 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX0bkHhU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    15 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXq5BEMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    32 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXctyrhU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    24 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXLiFlxW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    11 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXXmsdMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    12 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX4jRXMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    14 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXAjspMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    25 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXpHBkwW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    27 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXmVzvxW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    46 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXZprYgU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     1 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX8JsCMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    41 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXRni0gU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    54 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXWeD9lQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    40 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXaHmrhU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    42 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX7bGthU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    53 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXpkB5lQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    43 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXxdalgU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    13 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXbKW9LN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    19 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXqLxoxW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    26 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXaqiHwW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    28 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXYzzLwW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    44 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX0pUgpU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    16 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXlpZ7vW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    35 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX35RxgU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    58 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXoYsylQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    36 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXLvGToU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    60 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXKoHtlQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    34 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXKPPphU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    49 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXIQfvmQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    48 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX8g00lQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    39 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXNesVgU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    59 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXct3slQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    55 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXTHOflQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    33 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXsw9NgU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     6 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXtDaqMN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    56 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXJzVqkQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     2 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXNvhLJN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    18 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXKvIaxW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    23 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX0uvEuW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    51 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX8cFZjQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    61 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXmcFZjQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    37 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXrMfWmU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    57 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX0mBYjQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    29 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX4cJ1jW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     8 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXCaoUQN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    52 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXiNTfaQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    63 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXLhqAaQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    50 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXoEhXjQ | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     5 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXZUewQN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    62 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXhSlP9P | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    22 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXqF2fjW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     0 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXixuzQN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     4 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX0OGOPN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    30 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXT3a0tW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    20 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXUS5BuW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    17 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXX8nP9tW | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    45 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXcf7XlU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    47 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXUr7XlU | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |    10 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXd27AEN | RUNNING
+ ssb     |    3175 |      27 |         293 | gpadmin | select * from gp_workfile
+_entries; |     7 |     1 | Materialize |   25440 |    0 |        0 | pgsql_tmp/
+workfile_set_Material_Slice1.XXXXAejTEN | RUNNING
+(64 rows)
+
+ssb=# select * from gp_workfile_usage_per_query;
+ datname | procpid | sess_id | command_cnt | usename |               current_que
+ry                | segid |  state  | size | numfiles
+---------+---------+---------+-------------+---------+--------------------------
+------------------+-------+---------+------+----------
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     0 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    11 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    41 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     5 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    52 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    48 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     6 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    47 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    44 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    46 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    60 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    49 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    54 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    39 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    63 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    43 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    53 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    29 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    56 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    61 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    38 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     4 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    50 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    45 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    31 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    27 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    42 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    19 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    13 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    51 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    59 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    36 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    14 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     9 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    30 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    28 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     2 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    15 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    25 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    55 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     8 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    21 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    20 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    23 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    58 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    10 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    17 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    33 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    34 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    16 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    37 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    57 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    18 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     3 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    40 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    32 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    22 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    24 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    62 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    35 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     7 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |     1 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    12 | RUNNING |    0 |        0
+ ssb     |    3175 |      27 |         295 | gpadmin | select * from gp_workfile
+_usage_per_query; |    26 | RUNNING |    0 |        0
+(64 rows)
+
+ssb=#  select * from gp_workfile_usage_per_segment;
+ segid | size | numfiles
+-------+------+----------
+     7 |    0 |        0
+    54 |    0 |        0
+    30 |    0 |        0
+    63 |    0 |        0
+    35 |    0 |        0
+    14 |    0 |        0
+    24 |    0 |        0
+     9 |    0 |        0
+    19 |    0 |        0
+    37 |    0 |        0
+    39 |    0 |        0
+    18 |    0 |        0
+    12 |    0 |        0
+    56 |    0 |        0
+    28 |    0 |        0
+    16 |    0 |        0
+    31 |    0 |        0
+    40 |    0 |        0
+    17 |    0 |        0
+     6 |    0 |        0
+     1 |    0 |        0
+     8 |    0 |        0
+    45 |    0 |        0
+     4 |    0 |        0
+    26 |    0 |        0
+    15 |    0 |        0
+    36 |    0 |        0
+    52 |    0 |        0
+    47 |    0 |        0
+    27 |    0 |        0
+    21 |    0 |        0
+    44 |    0 |        0
+    34 |    0 |        0
+    46 |    0 |        0
+    32 |    0 |        0
+    55 |    0 |        0
+    61 |    0 |        0
+    42 |    0 |        0
+    59 |    0 |        0
+    43 |    0 |        0
+    48 |    0 |        0
+    33 |    0 |        0
+    62 |    0 |        0
+    53 |    0 |        0
+     2 |    0 |        0
+    58 |    0 |        0
+    11 |    0 |        0
+    23 |    0 |        0
+    20 |    0 |        0
+    50 |    0 |        0
+    38 |    0 |        0
+     3 |    0 |        0
+    -1 | 1792 |      128
+    13 |    0 |        0
+    41 |    0 |        0
+     0 |    0 |        0
+    51 |    0 |        0
+    25 |    0 |        0
+     5 |    0 |        0
+    10 |    0 |        0
+    29 |    0 |        0
+    22 |    0 |        0
+    57 |    0 |        0
+    49 |    0 |        0
+    60 |    0 |        0
+(65 rows)
+
+ssb=#

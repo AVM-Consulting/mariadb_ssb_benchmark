@@ -1,0 +1,8 @@
+2018-10-14 06:33:10|INFO|gpload session started 2018-10-14 06:33:10
+2018-10-14 06:33:10|INFO|started gpfdist -p 8080 -P 8081 -f "/ssb/ssb/lineorder.tbl" -t 30
+2018-10-14 06:33:10|INFO|did not find an external table to reuse. creating orders.ext_gpload_reusable_04fbb2f4_cf7b_11e8_bbf2_0a78550cb23a
+2018-10-14 08:08:34|INFO|running time: 5724.05 seconds
+2018-10-14 08:08:34|INFO|rows Inserted          = 5999989709
+2018-10-14 08:08:34|INFO|rows Updated           = 0
+2018-10-14 08:08:34|INFO|data formatting errors = 0
+2018-10-14 08:08:34|INFO|gpload succeeded

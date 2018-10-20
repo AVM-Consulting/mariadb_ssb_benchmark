@@ -1,0 +1,4 @@
+ssb=# select * from gp_stats_missing;
+ smischema | smitable | smisize | smicols | smirecs
+-----------+----------+---------+---------+---------
+(0 rows)

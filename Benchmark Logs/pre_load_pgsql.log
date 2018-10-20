@@ -1,0 +1,40 @@
+[gpadmin@mdw ~]$ psql -c "create database gpadmin" template1
+CREATE DATABASE
+[gpadmin@mdw ~]$ psql -c "alter user gpadmin password 'changeme'"
+ALTER ROLE
+[gpadmin@mdw ~]$ createdb ssb
+[gpadmin@mdw ~]$ psql -l
+                  List of databases
+   Name    |  Owner  | Encoding |  Access privileges
+-----------+---------+----------+---------------------
+ gpadmin   | gpadmin | UTF8     |
+ gpperfmon | gpadmin | UTF8     | gpadmin=CTc/gpadmin
+                                : =c/gpadmin
+ postgres  | gpadmin | UTF8     |
+ ssb       | gpadmin | UTF8     |
+ template0 | gpadmin | UTF8     | =c/gpadmin
+                                : gpadmin=CTc/gpadmin
+ template1 | gpadmin | UTF8     | =c/gpadmin
+                                : gpadmin=CTc/gpadmin
+(6 rows)
+
+[gpadmin@mdw ~]$ psql -U gpadmin ssb
+psql (8.3.23)
+Type "help" for help.
+
+ssb=# ALTER RESOURCE QUEUE pg_default WITH (ACTIVE_STATEMENTS=64);
+ALTER QUEUE
+ssb=# CREATE SCHEMA orders;
+CREATE SCHEMA
+ssb=# SET SEARCH_PATH TO orders, public, pg_catalog, gp_toolkit;
+SET
+ssb=# SHOW search_path;
+              search_path
+----------------------------------------
+ orders, public, pg_catalog, gp_toolkit
+(1 row)
+
+ssb=# ALTER ROLE gpadmin SET search_path TO orders, public, pg_catalog, gp_toolkit;
+ALTER ROLE
+ssb=# alter database ssb SET search_path TO orders, public, pg_catalog;
+ALTER DATABASE

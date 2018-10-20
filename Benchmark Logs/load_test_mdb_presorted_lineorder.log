@@ -1,0 +1,5 @@
+2018-10-14 16:06:21 (17722) INFO : Running distributed import (mode 1) on all PMs...
+2018-10-14 17:17:40 (17722) INFO : Row numbers with error reasons are listed in file : lineorder_s.tbl.Job_3103_12356.err_3
+2018-10-14 17:17:40 (17722) INFO : Exact error rows are listed in file : lineorder_s.tbl.Job_3103_12356.bad_3
+2018-10-14 17:17:40 (17722) INFO : For table ssb.lineorder_s: 6450407939 rows processed and 6450407938 rows inserted.
+2018-10-14 17:17:40 (17722) INFO : Bulk load completed, total run time : 4278.52 seconds

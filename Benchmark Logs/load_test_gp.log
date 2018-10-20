@@ -1,0 +1,46 @@
+2018-10-13 17:26:14|INFO|gpload session started 2018-10-13 17:26:14
+2018-10-13 17:26:14|INFO|started gpfdist -p 8080 -P 8081 -f "/ssb/ssb/customer.tbl" -t 30
+2018-10-13 17:26:14|INFO|did not find an external table to reuse. creating orders.ext_gpload_reusable_15eba894_cf0d_11e8_9a2a_0a78550cb23a
+2018-10-13 17:26:22|INFO|running time: 8.11 seconds
+2018-10-13 17:26:22|INFO|rows Inserted          = 30000000
+2018-10-13 17:26:22|INFO|rows Updated           = 0
+2018-10-13 17:26:22|INFO|data formatting errors = 0
+2018-10-13 17:26:22|INFO|gpload succeeded
+
+2018-10-13 17:26:41|INFO|gpload session started 2018-10-13 17:26:41
+2018-10-13 17:26:41|INFO|started gpfdist -p 8080 -P 8081 -f "/ssb/ssb/part.tbl" -t 30
+2018-10-13 17:26:41|INFO|did not find an external table to reuse. creating orders.ext_gpload_reusable_2636910a_cf0d_11e8_bbb9_0a78550cb23a
+2018-10-13 17:26:44|INFO|running time: 2.55 seconds
+2018-10-13 17:26:44|INFO|rows Inserted          = 2000000
+2018-10-13 17:26:44|INFO|rows Updated           = 0
+2018-10-13 17:26:44|INFO|data formatting errors = 0
+2018-10-13 17:26:44|INFO|gpload succeeded
+
+2018-10-13 17:27:00|INFO|gpload session started 2018-10-13 17:27:00
+2018-10-13 17:27:00|INFO|started gpfdist -p 8080 -P 8081 -f "/ssb/ssb/supplier.tbl" -t 30
+2018-10-13 17:27:01|INFO|did not find an external table to reuse. creating orders.ext_gpload_reusable_31a4c908_cf0d_11e8_b9f3_0a78550cb23a
+2018-10-13 17:27:02|INFO|running time: 2.05 seconds
+2018-10-13 17:27:02|INFO|rows Inserted          = 2000000
+2018-10-13 17:27:02|INFO|rows Updated           = 0
+2018-10-13 17:27:02|INFO|data formatting errors = 0
+2018-10-13 17:27:02|INFO|gpload succeeded
+
+018-10-13 17:27:20|INFO|gpload session started 2018-10-13 17:27:20
+2018-10-13 17:27:20|INFO|started gpfdist -p 8080 -P 8081 -f "/ssb/ssb/dimdate.tbl" -t 30
+2018-10-13 17:27:20|INFO|did not find an external table to reuse. creating orders.ext_gpload_reusable_3d76e1da_cf0d_11e8_bb8b_0a78550cb23a
+2018-10-13 17:27:21|INFO|running time: 0.44 seconds
+2018-10-13 17:27:21|INFO|rows Inserted          = 2556
+2018-10-13 17:27:21|INFO|rows Updated           = 0
+2018-10-13 17:27:21|INFO|data formatting errors = 0
+2018-10-13 17:27:21|INFO|gpload succeeded
+
+2018-10-13 17:27:43|INFO|gpload session started 2018-10-13 17:27:43
+2018-10-13 17:27:43|INFO|started gpfdist -p 8080 -P 8081 -f "/ssb/ssb/lineorder.tbl" -t 30
+2018-10-13 17:27:43|INFO|did not find an external table to reuse. creating orders.ext_gpload_reusable_4b020c6c_cf0d_11e8_bf0c_0a78550cb23a
+2018-10-13 18:34:22|INFO|running time: 3999.22 seconds
+2018-10-13 18:34:22|INFO|rows Inserted          = 5999989709
+2018-10-13 18:34:22|INFO|rows Updated           = 0
+2018-10-13 18:34:22|INFO|data formatting errors = 0
+2018-10-13 18:34:22|INFO|gpload succeeded
+
+

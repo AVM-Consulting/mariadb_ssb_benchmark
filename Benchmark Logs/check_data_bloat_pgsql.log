@@ -1,0 +1,16 @@
+/* After load was completed */
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_diag;
+ bdirelid | bdinspname | bdirelname | bdirelpages | bdiexppages | bdidiag
+----------+------------+------------+-------------+-------------+---------
+(0 rows)
+
+ssb=# SELECT * FROM gp_toolkit.gp_bloat_expected_pages LIMIT 5;
+ btdrelid | btdrelpages | btdexppages
+----------+-------------+-------------
+     1255 |          20 |          64
+    11852 |           1 |          64
+     6059 |           1 |          64
+     3602 |           1 |          64
+     2609 |           6 |          64
+(5 rows)
+

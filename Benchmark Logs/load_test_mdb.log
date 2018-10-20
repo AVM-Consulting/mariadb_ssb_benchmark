@@ -1,0 +1,31 @@
+[mariadb-user@ip-172-31-26-232 ssb]$ date; cpimport ssb dimdate dimdate.tbl; date
+Fri Oct 12 09:27:57 UTC 2018
+2018-10-12 09:27:57 (33743) INFO : Running distributed import (mode 1) on all PMs...
+2018-10-12 09:27:58 (33743) INFO : For table ssb.dimdate: 2556 rows processed and 2556 rows inserted.
+2018-10-12 09:27:58 (33743) INFO : Bulk load completed, total run time : 0.868927 seconds
+Fri Oct 12 09:27:58 UTC 2018
+
+[mariadb-user@ip-172-31-26-232 ssb]$ nohup /home/mariadb-user/mariadb/columnstore/bin/cpimport ssb lineorder lineorder.tbl &
+[1] 35208
+[mariadb-user@ip-172-31-26-232 ssb]$ nohup: ignoring input and appending output to ‘nohup.out’
+
+[mariadb-user@ip-172-31-26-232 ssb]$ tail -f nohup.out
+2018-10-12 09:33:17 (35208) INFO : Running distributed import (mode 1) on all PMs...
+2018-10-12 10:39:03 (35208) INFO : For table ssb.lineorder: 5999989709 rows processed and 5999989709 rows inserted.
+2018-10-12 10:39:03 (35208) INFO : Bulk load completed, total run time : 3946.72 seconds
+
+^C
+[1]+  Done                    nohup /home/mariadb-user/mariadb/columnstore/bin/cpimport ssb lineorder lineorder.tbl
+
+[mariadb-user@ip-172-31-26-232 ssb]$ cpimport ssb part part.tbl
+2018-10-12 13:14:23 (108149) INFO : Running distributed import (mode 1) on all PMs...
+2018-10-12 13:14:28 (108149) INFO : For table ssb.part: 2000000 rows processed and 2000000 rows inserted.
+2018-10-12 13:14:28 (108149) INFO : Bulk load completed, total run time : 4.80699 seconds
+[mariadb-user@ip-172-31-26-232 ssb]$ cpimport ssb supplier supplier.tbl
+2018-10-12 13:15:02 (108342) INFO : Running distributed import (mode 1) on all PMs...
+2018-10-12 13:15:09 (108342) INFO : For table ssb.supplier: 2000000 rows processed and 2000000 rows inserted.
+2018-10-12 13:15:09 (108342) INFO : Bulk load completed, total run time : 6.8084 seconds
+[mariadb-user@ip-172-31-26-232 ssb]$ cpimport ssb customer customer.tbl
+2018-10-12 13:15:50 (108578) INFO : Running distributed import (mode 1) on all PMs...
+2018-10-12 13:17:01 (108578) INFO : For table ssb.customer: 30000000 rows processed and 30000000 rows inserted.
+2018-10-12 13:17:01 (108578) INFO : Bulk load completed, total run time : 71.8925 seconds

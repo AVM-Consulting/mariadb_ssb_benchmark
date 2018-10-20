@@ -1,0 +1,67 @@
+ssb=# select * from gp_size_of_database;
+ sodddatname | sodddatsize
+-------------+--------------
+ gpperfmon   |    787437790
+ gpadmin     |    702873860
+ ssb         | 503873134854
+(3 rows)
+
+ssb=# select * from gp_size_of_schema_disk;
+ sosdnsp | sosdschematablesize | sosdschemaidxsize
+---------+---------------------+-------------------
+ orders  |        503144417320 |                 0
+ public  |                   0 |                 0
+(2 rows)
+
+ssb=# select * from gp_size_of_table_and_indexes_disk;
+ sotaidoid | sotaidtablesize | sotaididxsize | sotaidschemaname | sotaidtablenam
+e
+-----------+-----------------+---------------+------------------+---------------
+--
+     17362 |      2615745992 |             0 | orders           | customer
+     17348 |       160129504 |             0 | orders           | part
+     17355 |       161811768 |             0 | orders           | supplier
+     17369 |         4473464 |             0 | orders           | dimdate
+     17376 |    293820529496 |             0 | orders           | lineorder
+     17937 |    206381727096 |             0 | orders           | lineorder_s
+(6 rows)
+
+ssb=# select * from gp_size_of_table_and_indexes_licensing;
+ sotailoid | sotailtablesizedisk | sotailtablesizeuncompressed | sotailindexessi
+ze | sotailschemaname | sotailtablename
+-----------+---------------------+-----------------------------+----------------
+---+------------------+-----------------
+     17362 |          2615745992 |                2746320299.6 |
+ 0 | orders           | customer
+     17348 |           160129504 |                171040380.48 |
+ 0 | orders           | part
+     17355 |           161811768 |                168113845.12 |
+ 0 | orders           | supplier
+     17369 |             4473464 |                  4520461.28 |
+ 0 | orders           | dimdate
+     17376 |        293820529496 |             452481315110.24 |
+ 0 | orders           | lineorder
+     17937 |        206381727096 |             447843363785.52 |
+ 0 | orders           | lineorder_s
+(6 rows)
+
+ssb=# select * from gp_size_of_table_disk;
+ sotdoid |   sotdsize   | sotdtoastsize | sotdadditionalsize | sotdschemaname |
+sotdtablename
+---------+--------------+---------------+--------------------+----------------+-
+--------------
+   17362 |   2611486152 |             0 |            4259840 | orders         |
+customer
+   17348 |    155869664 |             0 |            4259840 | orders         |
+part
+   17355 |    157551928 |             0 |            4259840 | orders         |
+supplier
+   17369 |       213624 |             0 |            4259840 | orders         |
+dimdate
+   17376 | 293816269656 |             0 |            4259840 | orders         |
+lineorder
+   17937 | 206377467256 |             0 |            4259840 | orders         |
+lineorder_s
+(6 rows)
+
+

@@ -1,0 +1,130 @@
+ssb=# select * from gp_size_of_database;
+ sodddatname | sodddatsize
+-------------+--------------
+ gpperfmon   |    772200670
+ gpadmin     |    709285720
+ ssb         | 297491407758
+(3 rows)
+
+ssb=# select * from gp_size_of_schema_disk;
+ sosdnsp | sosdschematablesize | sosdschemaidxsize
+---------+---------------------+-------------------
+ orders  |        296762690224 |                 0
+ public  |                   0 |                 0
+(2 rows)
+
+ssb=# select * from gp_size_of_table_and_indexes_disk;
+ sotaidoid | sotaidtablesize | sotaididxsize | sotaidschemaname | sotaidtablenam
+e
+-----------+-----------------+---------------+------------------+---------------
+--
+     17362 |      2615745992 |             0 | orders           | customer
+     17348 |       160129504 |             0 | orders           | part
+     17355 |       161811768 |             0 | orders           | supplier
+     17369 |         4473464 |             0 | orders           | dimdate
+     17376 |    293820529496 |             0 | orders           | lineorder
+(5 rows)
+
+ssb=# select * from gp_size_of_table_and_indexes_licensing;
+ sotailoid | sotailtablesizedisk | sotailtablesizeuncompressed | sotailindexessi
+ze | sotailschemaname | sotailtablename
+-----------+---------------------+-----------------------------+----------------
+---+------------------+-----------------
+     17362 |          2615745992 |                2746320299.6 |
+ 0 | orders           | customer
+     17348 |           160129504 |                171040380.48 |
+ 0 | orders           | part
+     17355 |           161811768 |                168113845.12 |
+ 0 | orders           | supplier
+     17369 |             4473464 |                  4520461.28 |
+ 0 | orders           | dimdate
+     17376 |        293820529496 |             452481315110.24 |
+ 0 | orders           | lineorder
+(5 rows)
+
+ssb=# select * from gp_size_of_table_disk;
+ sotdoid |   sotdsize   | sotdtoastsize | sotdadditionalsize | sotdschemaname |
+sotdtablename
+---------+--------------+---------------+--------------------+----------------+-
+--------------
+   17362 |   2611486152 |             0 |            4259840 | orders         |
+customer
+   17348 |    155869664 |             0 |            4259840 | orders         |
+part
+   17355 |    157551928 |             0 |            4259840 | orders         |
+supplier
+   17369 |       213624 |             0 |            4259840 | orders         |
+dimdate
+   17376 | 293816269656 |             0 |            4259840 | orders         |
+lineorder
+(5 rows)
+
+ssb=# select * from gp_disk_free;
+ dfsegment | dfhostname |  dfdevice  |  dfspace
+-----------+------------+------------+-----------
+        57 |  sdw4      |  /dev/xvdb | 343517796
+        51 |  sdw4      |  /dev/xvdb | 343517796
+        53 |  sdw4      |  /dev/xvdb | 343517796
+        61 |  sdw4      |  /dev/xvdb | 343517796
+        20 |  sdw2      |  /dev/xvdb | 343535828
+        26 |  sdw2      |  /dev/xvdb | 343535828
+        29 |  sdw2      |  /dev/xvdb | 343535828
+        54 |  sdw4      |  /dev/xvdb | 343517796
+        55 |  sdw4      |  /dev/xvdb | 343517796
+        12 |  sdw1      |  /dev/xvdb | 343535820
+        22 |  sdw2      |  /dev/xvdb | 343535828
+         2 |  sdw1      |  /dev/xvdb | 343535820
+         5 |  sdw1      |  /dev/xvdb | 343535820
+         6 |  sdw1      |  /dev/xvdb | 343535820
+        21 |  sdw2      |  /dev/xvdb | 343535828
+        52 |  sdw4      |  /dev/xvdb | 343517796
+        25 |  sdw2      |  /dev/xvdb | 343535828
+        58 |  sdw4      |  /dev/xvdb | 343517796
+        49 |  sdw4      |  /dev/xvdb | 343517796
+        59 |  sdw4      |  /dev/xvdb | 343517796
+        50 |  sdw4      |  /dev/xvdb | 343517796
+        16 |  sdw2      |  /dev/xvdb | 343535828
+         3 |  sdw1      |  /dev/xvdb | 343535820
+         9 |  sdw1      |  /dev/xvdb | 343535820
+        13 |  sdw1      |  /dev/xvdb | 343535820
+         7 |  sdw1      |  /dev/xvdb | 343535820
+        19 |  sdw2      |  /dev/xvdb | 343535828
+        23 |  sdw2      |  /dev/xvdb | 343535828
+        27 |  sdw2      |  /dev/xvdb | 343535828
+        31 |  sdw2      |  /dev/xvdb | 343535828
+        24 |  sdw2      |  /dev/xvdb | 343535828
+         0 |  sdw1      |  /dev/xvdb | 343535820
+        10 |  sdw1      |  /dev/xvdb | 343535820
+        14 |  sdw1      |  /dev/xvdb | 343535820
+        18 |  sdw2      |  /dev/xvdb | 343535828
+        15 |  sdw1      |  /dev/xvdb | 343535820
+         8 |  sdw1      |  /dev/xvdb | 343535820
+        11 |  sdw1      |  /dev/xvdb | 343535820
+         4 |  sdw1      |  /dev/xvdb | 343535820
+         1 |  sdw1      |  /dev/xvdb | 343535820
+        40 |  sdw3      |  /dev/xvdb | 343518240
+        42 |  sdw3      |  /dev/xvdb | 343518240
+        36 |  sdw3      |  /dev/xvdb | 343518240
+        34 |  sdw3      |  /dev/xvdb | 343518240
+        62 |  sdw4      |  /dev/xvdb | 343517796
+        28 |  sdw2      |  /dev/xvdb | 343535828
+        33 |  sdw3      |  /dev/xvdb | 343518240
+       38 |  sdw3      |  /dev/xvdb | 343518240
+        41 |  sdw3      |  /dev/xvdb | 343518240
+        39 |  sdw3      |  /dev/xvdb | 343518240
+        37 |  sdw3      |  /dev/xvdb | 343518240
+        45 |  sdw3      |  /dev/xvdb | 343518240
+        47 |  sdw3      |  /dev/xvdb | 343518240
+        43 |  sdw3      |  /dev/xvdb | 343518240
+        35 |  sdw3      |  /dev/xvdb | 343518240
+        46 |  sdw3      |  /dev/xvdb | 343518240
+        32 |  sdw3      |  /dev/xvdb | 343518240
+        44 |  sdw3      |  /dev/xvdb | 343518240
+        63 |  sdw4      |  /dev/xvdb | 343517796
+        48 |  sdw4      |  /dev/xvdb | 343517796
+        60 |  sdw4      |  /dev/xvdb | 343517796
+        56 |  sdw4      |  /dev/xvdb | 343517796
+        30 |  sdw2      |  /dev/xvdb | 343535828
+        17 |  sdw2      |  /dev/xvdb | 343535828
+(64 rows)
+

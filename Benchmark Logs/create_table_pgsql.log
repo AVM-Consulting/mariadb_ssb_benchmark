@@ -1,0 +1,82 @@
+ssb=# CREATE TABLE orders.part (
+ssb(#   p_partkey             integer         ,
+ssb(#   p_name                varchar(22)     ,
+ssb(#   p_mfgr                varchar(6)      ,
+ssb(#   p_category            varchar(7)      ,
+ssb(#   p_brand1              varchar(9)      ,
+ssb(#   p_color               varchar(11)     ,
+ssb(#   p_type                varchar(25)     ,
+ssb(#   p_size                integer         ,
+ssb(#   p_container           varchar(10)     )
+ssb-#   WITH (APPENDONLY=TRUE, ORIENTATION=COLUMN, COMPRESSTYPE=RLE_TYPE)
+ssb-#   DISTRIBUTED RANDOMLY;
+CREATE TABLE
+ssb=# CREATE TABLE orders.supplier (
+ssb(#   s_suppkey             integer        ,
+ssb(#   s_name                varchar(25)    ,
+ssb(#   s_address             varchar(25)    ,
+ssb(#   s_city                varchar(10)    ,
+ssb(#   s_nation              varchar(15)    ,
+ssb(#   s_region              varchar(12)    ,
+ssb(#   s_phone               varchar(15)    )
+ssb-#   WITH (APPENDONLY=TRUE, ORIENTATION=COLUMN, COMPRESSTYPE=RLE_TYPE)
+ssb-#   DISTRIBUTED RANDOMLY;
+CREATE TABLE
+ssb=# CREATE TABLE orders.customer (
+ssb(#   c_custkey             integer        ,
+ssb(#   c_name                varchar(25)    ,
+ssb(#   c_address             varchar(25)    ,
+ssb(#   c_city                varchar(10)    ,
+ssb(#   c_nation              varchar(15)    ,
+ssb(#   c_region              varchar(12)    ,
+ssb(#   c_phone               varchar(15)    ,
+ssb(#   c_mktsegment          varchar(10)    )
+ssb-#   WITH (APPENDONLY=TRUE, ORIENTATION=COLUMN, COMPRESSTYPE=RLE_TYPE)
+ssb-#   DISTRIBUTED RANDOMLY;
+CREATE TABLE
+ssb=# CREATE TABLE orders.dimdate (
+ssb(#   d_datekey            date       ,
+ssb(#   d_date               varchar(19)   ,
+ssb(#   d_dayofweek          varchar(10)   ,
+ssb(#   d_month              varchar(10)   ,
+ssb(#   d_year               integer       ,
+ssb(#   d_yearmonthnum       integer       ,
+ssb(#   d_yearmonth          varchar(8)    ,
+ssb(#   d_daynuminweek       integer       ,
+ssb(#   d_daynuminmonth      integer       ,
+ssb(#   d_daynuminyear       integer       ,
+ssb(#   d_monthnuminyear     integer       ,
+ssb(#   d_weeknuminyear      integer       ,
+ssb(#   d_sellingseason      varchar(13)   ,
+sb(#   d_lastdayinweekfl    boolean       ,
+ssb(#   d_lastdayinmonthfl   boolean       ,
+ssb(#   d_holidayfl          boolean       ,
+ssb(#   d_weekdayfl          boolean       )
+ssb-#   WITH (APPENDONLY=TRUE, ORIENTATION=COLUMN, COMPRESSTYPE=RLE_TYPE)
+ssb-#   DISTRIBUTED RANDOMLY;
+CREATE TABLE
+ssb=# CREATE TABLE orders.lineorder (
+ssb(#   lo_orderkey           bigint          ,
+ssb(#   /*int can hold max of 4,294,967,293 only*/
+ssb(#   lo_linenumber         integer         ,
+ssb(#   lo_custkey            integer         ,
+ssb(#   lo_partkey            integer         ,
+ssb(#   lo_suppkey            integer         ,
+ssb(#   lo_orderdate          date            ,
+ssb(#   lo_orderpriority      varchar(15)     ,
+ssb(#   lo_shippriority       varchar(1)      ,
+ssb(#   lo_quantity           integer         ,
+ssb(#   lo_extendedprice      integer         ,
+ssb(#   lo_ordertotalprice    integer         ,
+ssb(#   lo_discount           integer         ,
+ssb(#   lo_revenue            integer         ,
+ssb(#   lo_supplycost         integer         ,
+ssb(#   lo_tax                integer         ,
+ssb(#   lo_commitdate         date         ,
+ssb(#   lo_shipmode           varchar(10)
+ssb(# )
+ssb-# WITH (APPENDONLY=TRUE, ORIENTATION=COLUMN, COMPRESSTYPE=RLE_TYPE)
+ssb-# DISTRIBUTED RANDOMLY;
+CREATE TABLE
+
+

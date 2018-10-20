@@ -1,0 +1,9 @@
+ssb=# select * from gp_toolkit.gp_skew_coefficients;
+ skcoid | skcnamespace | skcrelname |          skccoeff
+--------+--------------+------------+-----------------------------
+  16394 | orders       | supplier   |     0.030007914966387139000
+  16387 | orders       | part       |     0.030991347535195111000
+  16408 | orders       | dimdate    |     4.905740528539913081000
+  16401 | orders       | customer   | 0.0019268004385531857493000
+  16415 | orders       | lineorder  | 0.0000090760490178501811000
+(5 rows)
